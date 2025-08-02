@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>統計方法</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        h2 { font-size: 1.7em; margin-bottom:5px ; font-weight:bold; color: #333333;  }
+        h3 { font-size: 1.3em; font-weight:bold; color: #555555; }
+        p, ul, li { font-size: 1.1em; margin-left: 10px ; color: #666666; }
+        .example, .experiment, .probability { margin-top: 20px; }
+        /* content { margin-left: 20px; color: #eb0000;} */
+        code { background-color: #f4f4f4; padding: 2px 5px; font-size: 1.1em; }
+        pre { background-color: #f4f4f4; padding: 10px; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+
+<h2>3.8節</h2>
+
+<h3>1. 介紹統計方法：</h3>
+<ul>
+    <li>用例子列表的方式列出，每個例子分別計算。</li>
+    <li>建議用清晰的方法列舉，以便理解各種統計的概念。</li>
+</ul>
+
+
+
+<h3>2. 統計記憶函數：</h3>
+<ul>
+    <li>列出各種可能性，計算總概率。</li>
+    <li>統計範疇內列表，例如將S設為0、一個S設為多少，總和應等於1。</li>
+</ul>
+<br>
+
+<h2>3.9 節</h2>
+
+<h3>3. 例子說明 - 車型示例：</h3>
+<p>假設庫存裡有150%的車輛，都配備了側面網狀安全氣囊。找出這些車型的概率分佈。</p>
+<br>
+
+<h3>4. 設計實驗方法：</h3>
+<p>丟硬幣模擬：</p>
+<ul>
+    <li>丟4次硬幣每次的結果，作為車輛配備與否的可能性。</li>
+    <li>計算各種情況下安全氣囊的數量。</li>
+</ul>
+<br>
+
+<h3>5. 計算機率分佈：</h3>
+<p>用C(n, k)來表示n輛車中選取k輛有安全氣囊的組合。</p>
+<p>提到若硬幣具有偏置（例如正面出現的概率較低），使用二項分佈計算。</p>
+<br>
+
+<h2>3.9節下的題目解答</h2>
+
+<h3>1. 製作表格示例：</h3>
+<ul>
+    <li>將所有可能結果列出。</li>
+    <li>計算總概率並與給定問題對比。</li>
+</ul>
+<br>
+
+<h3>2. 關於累積函數：</h3>
+<ul>
+    <li>解釋累積函數的圖形表示方法，特徵為曲線爬升。</li>
+    <li>用積分表示累積機率。</li>
+</ul>
+<br>
+
+<h2>Continuous Case</h2>
+
+<h3>1. Continuous Case介紹：</h3>
+<ul>
+    <li>累積機率需用微積分計算。</li>
+    <li>單點機率為0。</li>
+</ul>
+<br>
+
+<h3>2. 計算示例 - 微積分應用：</h3>
+<ul>
+    <li>用面積表示機率，使用積分計算。</li>
+</ul>
+<br>
+
+<h2>例題解析</h2>
+
+<div class="example">
+    <h3>例題1</h3>
+    <p><strong>題目：</strong>假設某溫度範圍內的機率密度函數。</p>
+    <pre><code>f(x) = (1/9) * (x^2 + 2x + 1) for -1 <= x <= 2</code></pre>
+    <strong>計算：</strong>
+    <p>核實總面積為1（使用積分）。計算特定範圍內的機率，如 P(0 &#8804; x &#8804; 1)。</p>
+</div>
+<br>
+
+<div class="example">
+    <h3>例題2</h3>
+    <p><strong>題目：</strong>計算累積函數 <code>F_X(x)</code>。</p>
+    <pre><code>F_X(x) = ∫ from -1 to x of f(t) dt</code></pre>
+    <strong>步驟：</strong>
+    <p>使用積分計算累積函數，結果為：</p>
+    <pre><code>F_X(x) = (1/9) * (x^3 / 3 + x^2 + x)</code></pre>
+    <strong>應用：</strong>
+    <p>利用累積函數計算範圍機率，如 <code>P(0 &#8804; x &#8804; 1) = F_X(1) - F_X(0)</code>。</p>
+</div>
+<br>
+
+</body>
+</html>

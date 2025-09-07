@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>
-   每日活動紀錄
+   08月01日當沖紀錄 - Hydestory
   </title>
   <script src="https://cdn.tailwindcss.com">
   </script>
@@ -45,24 +45,24 @@
     </div>
     <div class="flex space-x-8">
      <a class="text-[#8a7f6d] hover:text-black" href="../index.html">
-      Home
+      首頁
      </a>
-     <a class="text-[#8a7f6d] hover:text-black" href="#">
-      股票紀錄
+     <a class="text-[#8a7f6d] hover:text-black" href="../note.html">
+      課堂筆記
      </a>
-     <a class="text-[#8a7f6d] hover:text-black" href="daily.html">
+     <a class="text-[#8a7f6d] hover:text-black" href="../activity.html">
       每日紀錄
      </a>
-     <a class="text-[#8a7f6d] hover:text-black" href="#">
-      About
+     <a class="text-[#8a7f6d] hover:text-black" href="../stock.html">
+      股票紀錄
      </a>
      <a class="text-[#8a7f6d] hover:text-black" href="#">
-      Contact
+      關於我
      </a>
     </div>
     <div class="flex items-center space-x-4">
      <div class="relative">
-      <input class="border rounded-full px-4 py-1" placeholder="Search..." type="text"/>
+      <input class="border rounded-full px-4 py-1" placeholder="搜尋..." type="text"/>
       <i class="fas fa-search absolute right-3 top-2 text-gray-500">
       </i>
      </div>
@@ -92,8 +92,22 @@
      08月01日當沖紀錄
     </h2>
     <p class="text-lg text-gray-600">
-     南亞(1303)
+     南亞(1303) 與 尖點(8021) 交易檢討
     </p>
+    <div class="mt-4 flex justify-center space-x-4">
+     <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">
+      <i class="fas fa-chart-line mr-1"></i>
+      當沖交易
+     </span>
+     <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">
+      <i class="fas fa-lightbulb mr-1"></i>
+      學習檢討
+     </span>
+     <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">
+      <i class="fas fa-exclamation-triangle mr-1"></i>
+      虧損記錄
+     </span>
+    </div>
    </div>
     <!-- Image Section -->
     <div class="flex justify-center mb-8">
@@ -124,6 +138,29 @@
             <li>在觀察股市開盤10分鐘左右後，寫出之後可以考慮進場的低點，有一個明確的目標，才不會在價格急速變化時，摸不著該入場的時間點</li>
             <li>當發展走向已經超出目前理解時，在情況明朗前，應先想如何全身而退脫手，而不是繼續逗留在裡面</li>
           </ul>
+        </div>
+        
+        <!-- 交易統計 -->
+        <div class="mt-8 bg-white rounded-lg shadow-lg p-6">
+          <h4 class="text-xl font-semibold mb-4 text-center">交易統計</h4>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="text-center">
+              <div class="text-2xl font-bold text-red-600">8</div>
+              <div class="text-sm text-gray-600">總交易張數</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-yellow-600">2</div>
+              <div class="text-sm text-gray-600">交易股票</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-orange-600">39.95</div>
+              <div class="text-sm text-gray-600">平均賣價</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-gray-600">-</div>
+              <div class="text-sm text-gray-600">總損益</div>
+            </div>
+          </div>
         </div>
       </div>
   

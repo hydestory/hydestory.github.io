@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>
-   每日活動紀錄
+   股票當沖紀錄 - Hydestory
   </title>
   <script src="https://cdn.tailwindcss.com">
   </script>
@@ -45,24 +45,24 @@
     </div>
     <div class="flex space-x-8">
      <a class="text-[#8a7f6d] hover:text-black" href="../index.html">
-      Home
+      首頁
      </a>
-     <a class="text-[#8a7f6d] hover:text-black" href="#">
-      股票紀錄
+     <a class="text-[#8a7f6d] hover:text-black" href="note.html">
+      課堂筆記
      </a>
-     <a class="text-[#8a7f6d] hover:text-black" href="daily.html">
+     <a class="text-[#8a7f6d] hover:text-black" href="activity.html">
       每日紀錄
      </a>
-     <a class="text-[#8a7f6d] hover:text-black" href="#">
-      About
+     <a class="text-[#8a7f6d] hover:text-black" href="stock.html">
+      股票紀錄
      </a>
      <a class="text-[#8a7f6d] hover:text-black" href="#">
-      Contact
+      關於我
      </a>
     </div>
     <div class="flex items-center space-x-4">
      <div class="relative">
-      <input class="border rounded-full px-4 py-1" placeholder="Search..." type="text"/>
+      <input class="border rounded-full px-4 py-1" placeholder="搜尋..." type="text"/>
       <i class="fas fa-search absolute right-3 top-2 text-gray-500">
       </i>
      </div>
@@ -92,8 +92,22 @@
      股票當沖紀錄
     </h2>
     <p class="text-lg text-gray-600">
-     股市新手的當沖心得
+     股市新手的當沖心得與交易檢討
     </p>
+    <div class="mt-4 flex justify-center space-x-4">
+     <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">
+      <i class="fas fa-chart-line mr-1"></i>
+      當沖交易
+     </span>
+     <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">
+      <i class="fas fa-lightbulb mr-1"></i>
+      學習心得
+     </span>
+     <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+      <i class="fas fa-chart-bar mr-1"></i>
+      績效分析
+     </span>
+    </div>
    </div>
    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
     <div class="bg-white border rounded-lg overflow-hidden shadow-lg">
@@ -103,7 +117,7 @@
      <div class="p-4">
       <div class="flex items-center text-gray-500 text-sm mb-2">
        <span class="mr-2">
-        Admin
+        管理員
        </span>
        <span>
         •
@@ -133,123 +147,56 @@
       </div>
      </div>
     </div>
-    <div class="bg-white border rounded-lg overflow-hidden shadow-lg">
-     <a href="src/daily/2025-02-13.html">
-      <img alt="Activity image" class="w-full h-48 object-cover" src="img/activity/20250213_usage_log.png"/>
-     </a>
-     <div class="p-4">
-      <div class="flex items-center text-gray-500 text-sm mb-2">
-       <span class="mr-2">
-        Admin
-       </span>
-       <span>
-        •
-       </span>
-       <span class="ml-2">
-        2025-02-13
-       </span>
-      </div>
-      <a href="src/daily/2025-02-13.html">
-       <h3 class="text-lg font-semibold mb-2">
-        02月13日
-       </h3>
-      </a>
-      <p class="text-gray-700 mb-4">
-       使用者今天主要使用了檔案總管進行檔案管理，並且花了一些時間在 Google Chrome 上進行網頁瀏覽。此外，使用者還使用了 Visual Studio Code 進行程式開發，並使用了 vncviewer 和 putty 進行遠端連線。使用者也花了一些時間在 Discord 上進行通訊。
-      </p>
-      <div class="flex items-center justify-between text-gray-500 text-sm">
-       <div class="flex items-center">
-        <i class="fas fa-tags mr-1">
-        </i>
-        <span>
-         工作 學習 通訊
-        </span>
-       </div>
-       <i class="far fa-heart">
-       </i>
-      </div>
+    <!-- 預留更多交易記錄的位置 -->
+    <div class="bg-white border rounded-lg overflow-hidden shadow-lg border-dashed border-gray-300">
+     <div class="p-8 text-center">
+      <i class="fas fa-plus-circle text-4xl text-gray-400 mb-4"></i>
+      <h3 class="text-lg font-semibold text-gray-600 mb-2">更多交易記錄</h3>
+      <p class="text-gray-500">持續記錄交易心得與檢討</p>
      </div>
     </div>
-    <div class="bg-white border rounded-lg overflow-hidden shadow-lg">
-     <a href="src/daily/2025-02-12.html">
-      <img alt="Activity image" class="w-full h-48 object-cover" src="img/activity/20250212_usage_log.png"/>
-     </a>
-     <div class="p-4">
-      <div class="flex items-center text-gray-500 text-sm mb-2">
-       <span class="mr-2">
-        Admin
-       </span>
-       <span>
-        •
-       </span>
-       <span class="ml-2">
-        2025-02-12
-       </span>
-      </div>
-      <a href="src/daily/2025-02-12.html">
-       <h3 class="text-lg font-semibold mb-2">
-        02月12日
-       </h3>
-      </a>
-      <p class="text-gray-700 mb-4">
-       使用者今天主要使用 Google Chrome 瀏覽網頁。
-      </p>
-      <div class="flex items-center justify-between text-gray-500 text-sm">
-       <div class="flex items-center">
-        <i class="fas fa-tags mr-1">
-        </i>
-        <span>
-         瀏覽
-        </span>
-       </div>
-       <i class="far fa-heart">
-       </i>
-      </div>
+    <div class="bg-white border rounded-lg overflow-hidden shadow-lg border-dashed border-gray-300">
+     <div class="p-8 text-center">
+      <i class="fas fa-chart-pie text-4xl text-gray-400 mb-4"></i>
+      <h3 class="text-lg font-semibold text-gray-600 mb-2">績效分析</h3>
+      <p class="text-gray-500">交易績效統計與分析</p>
      </div>
     </div>
-    <!-- Activity 1 -->
-    <div class="bg-white border rounded-lg overflow-hidden shadow-lg">
-     <a href="src/daily/2023-10-01.html">
-      <img alt="Activity image" class="w-full h-48 object-cover" src="src/img/daily1.jpg"/>
-     </a>
-     <div class="p-4">
-      <div class="flex items-center text-gray-500 text-sm mb-2">
-       <span class="mr-2">
-        Admin
-       </span>
-       <span>
-        •
-       </span>
-       <span class="ml-2">
-        2023-10-01
-       </span>
-      </div>
-      <a href="src/daily/2023-10-01.html">
-       <h3 class="text-lg font-semibold mb-2">
-        10月1日
-       </h3>
-      </a>
-      <p class="text-gray-700 mb-4">
-       重點紀錄
-      </p>
-      <div class="flex items-center justify-between text-gray-500 text-sm">
-       <div class="flex items-center">
-        <i class="fas fa-tags mr-1">
-        </i>
-        <span>
-         日記, 活動
-        </span>
-       </div>
-       <i class="far fa-heart">
-       </i>
-      </div>
+    <div class="bg-white border rounded-lg overflow-hidden shadow-lg border-dashed border-gray-300">
+     <div class="p-8 text-center">
+      <i class="fas fa-book text-4xl text-gray-400 mb-4"></i>
+      <h3 class="text-lg font-semibold text-gray-600 mb-2">學習筆記</h3>
+      <p class="text-gray-500">股市知識與技巧學習</p>
      </div>
     </div>
    </div>
-   <!-- Load More Button -->
+   <!-- Trading Statistics -->
+   <div class="mt-12 bg-white rounded-lg shadow-lg p-8">
+    <h3 class="text-2xl font-serif text-black text-center mb-6">交易統計</h3>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+     <div class="text-center">
+      <div class="text-3xl font-bold text-red-600 mb-2">1</div>
+      <div class="text-gray-600">交易天數</div>
+     </div>
+     <div class="text-center">
+      <div class="text-3xl font-bold text-yellow-600 mb-2">2</div>
+      <div class="text-gray-600">交易股票</div>
+     </div>
+     <div class="text-center">
+      <div class="text-3xl font-bold text-orange-600 mb-2">8</div>
+      <div class="text-gray-600">總交易張數</div>
+     </div>
+     <div class="text-center">
+      <div class="text-3xl font-bold text-gray-600 mb-2">-</div>
+      <div class="text-gray-600">累計損益</div>
+     </div>
+    </div>
+   </div>
+
+   <!-- 載入更多按鈕 -->
    <div class="flex justify-center mt-8">
     <button class="border border-black text-black px-6 py-2 hover:bg-black hover:text-white transition duration-300">
-     Load More
+     載入更多記錄
     </button>
    </div>
   </div>

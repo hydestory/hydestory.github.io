@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>課堂筆記</title>
+    <title>課堂筆記 - Hydestory</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -31,15 +31,15 @@
         <div class="container mx-auto flex justify-between items-center py-4 px-4">
             <div class="text-2xl font-serif">Hydestory</div>
             <div class="flex space-x-8">
-                <a href="index.html" class="text-[#8a7f6d] hover:text-black">Home</a>
-                <a href="#" class="text-[#8a7f6d] hover:text-black">Blog</a>
+                <a href="../index.html" class="text-[#8a7f6d] hover:text-black">首頁</a>
+                <a href="activity.html" class="text-[#8a7f6d] hover:text-black">每日紀錄</a>
                 <a href="note.html" class="text-[#8a7f6d] hover:text-black">課堂筆記</a>
-                <a href="#" class="text-[#8a7f6d] hover:text-black">About</a>
-                <a href="#" class="text-[#8a7f6d] hover:text-black">Contact</a>
+                <a href="stock.html" class="text-[#8a7f6d] hover:text-black">股票紀錄</a>
+                <a href="#" class="text-[#8a7f6d] hover:text-black">關於我</a>
             </div>
             <div class="flex items-center space-x-4">
                 <div class="relative">
-                    <input type="text" placeholder="Search..." class="border rounded-full px-4 py-1">
+                    <input type="text" placeholder="搜尋..." class="border rounded-full px-4 py-1">
                     <i class="fas fa-search absolute right-3 top-2 text-gray-500"></i>
                 </div>
                 <a href="#" class="text-[#8a7f6d]"><i class="fab fa-instagram"></i></a>
@@ -55,22 +55,36 @@
         <div class="text-center mb-8">
             <h2 class="text-4xl font-serif text-black">課堂筆記</h2>
             <p class="text-lg text-gray-600">這裏是你所有課堂筆記的集合地</p>
+            <div class="mt-4 flex justify-center space-x-4">
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                    <i class="fas fa-book mr-1"></i>
+                    113學年
+                </span>
+                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                    <i class="fas fa-graduation-cap mr-1"></i>
+                    4門課程
+                </span>
+                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
+                    <i class="fas fa-file-alt mr-1"></i>
+                    多個筆記
+                </span>
+            </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Note 1 -->
             <div class="bg-white border rounded-lg overflow-hidden shadow-lg">
-                <a href="src/class/probability/probability.html">
-                    <img src="src/img/probability.jpg" alt="Post image" class="w-full h-48 object-cover">
+                <a href="class/probability/probability.html">
+                    <img src="img/probability.jpg" alt="Post image" class="w-full h-48 object-cover">
                 </a> 
                 <div class="p-4">
                     <div class="flex items-center text-gray-500 text-sm mb-2">
-                        <span class="mr-2">Admin</span>
+                        <span class="mr-2">管理員</span>
                         <span>•</span>
                         <span class="ml-2">s113-1</span>
                         <span>•</span>
                         <span class="ml-2">黃毅然</span>
                     </div>
-                    <a href="src/class/probability/probability.html">
+                    <a href="class/probability/probability.html">
                         <h3 class="text-lg font-semibold mb-2">機率與統計</h3>
                     </a>
                     <p class="text-gray-700 mb-4">113學年的機率與統計</p>
@@ -85,18 +99,18 @@
             </div>
             <!-- Note 2 -->
             <div class="bg-white border rounded-lg overflow-hidden shadow-lg">
-                <a href="src/class/dataStructure/dataStructure.html">
-                    <img src="src/img/dataStructure.png" alt="Post image" class="w-full h-48 object-cover">
+                <a href="class/dataStructure/dataStructure.html">
+                    <img src="img/dataStructure.png" alt="Post image" class="w-full h-48 object-cover">
                 </a> 
                 <div class="p-4">
                     <div class="flex items-center text-gray-500 text-sm mb-2">
-                        <span class="mr-2">Admin</span>
+                        <span class="mr-2">管理員</span>
                         <span>•</span>
                         <span class="ml-2">s113-1</span>
                         <span>•</span>
                         <span class="ml-2">簡廷因</span>
                     </div>
-                    <a href="src/class/dataStructure/dataStructure.html">
+                    <a href="class/dataStructure/dataStructure.html">
                         <h3 class="text-lg font-semibold mb-2">資料結構</h3>
                     </a>
                     <p class="text-gray-700 mb-4">113學年的資料結構</p>
@@ -111,18 +125,18 @@
             </div>
             <!-- Note 3 -->
             <div class="bg-white border rounded-lg overflow-hidden shadow-lg">
-                <a href="src/class/biology/biology.html">
-                    <img src="src/img/biology.jpg" alt="Post image" class="w-full h-48 object-cover">
+                <a href="class/biology/biology.html">
+                    <img src="img/biology.jpg" alt="Post image" class="w-full h-48 object-cover">
                 </a>                 
                 <div class="p-4">
                     <div class="flex items-center text-gray-500 text-sm mb-2">
-                        <span class="mr-2">Admin</span>
+                        <span class="mr-2">管理員</span>
                         <span>•</span>
                         <span class="ml-2">s113-1</span>
                         <span>•</span>
                         <span class="ml-2">歐昱言</span>
                     </div>
-                    <a href="src/class/biology/biology.html">
+                    <a href="class/biology/biology.html">
                         <h3 class="text-lg font-semibold mb-2">生物學概論</h3>
                     </a>
                     <p class="text-gray-700 mb-4">113學年的生物學概論</p>
@@ -137,18 +151,18 @@
             </div>
             <!-- Note 4 -->
             <div class="bg-white border rounded-lg overflow-hidden shadow-lg">
-                <a href="src/class/cloud/cloud.html">
-                    <img src="src/img/cloud.png" alt="Post image" class="w-full h-48 object-cover">
+                <a href="class/cloud/cloud.html">
+                    <img src="img/cloud.png" alt="Post image" class="w-full h-48 object-cover">
                 </a>                 
                 <div class="p-4">
                     <div class="flex items-center text-gray-500 text-sm mb-2">
-                        <span class="mr-2">Admin</span>
+                        <span class="mr-2">管理員</span>
                         <span>•</span>
                         <span class="ml-2">s113-1</span>
                         <span>•</span>
                         <span class="ml-2">陳李書滕</span>
                     </div>
-                    <a href="src/class/cloud/cloud.html">
+                    <a href="class/cloud/cloud.html">
                         <h3 class="text-lg font-semibold mb-2">雲端運算與服務</h3>
                     </a>
                     <p class="text-gray-700 mb-4">113學年的雲端運算與服務</p>
@@ -162,9 +176,32 @@
                 </div>
             </div>
         </div>
-        <!-- Load More Button -->
+        <!-- Course Statistics -->
+        <div class="mt-12 bg-white rounded-lg shadow-lg p-8">
+            <h3 class="text-2xl font-serif text-black text-center mb-6">課程統計</h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-blue-600 mb-2">4</div>
+                    <div class="text-gray-600">修習課程</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-600 mb-2">15+</div>
+                    <div class="text-gray-600">筆記數量</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-purple-600 mb-2">3</div>
+                    <div class="text-gray-600">不同教授</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-orange-600 mb-2">100%</div>
+                    <div class="text-gray-600">完成度</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 載入更多按鈕 -->
         <div class="flex justify-center mt-8">
-            <button class="border border-black text-black px-6 py-2 hover:bg-black hover:text-white transition duration-300">Load More</button>
+            <button class="border border-black text-black px-6 py-2 hover:bg-black hover:text-white transition duration-300">載入更多筆記</button>
         </div>
     </div>
     

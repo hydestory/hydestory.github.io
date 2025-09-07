@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>
-   每日活動紀錄
+   每日活動紀錄 - Hydestory
   </title>
   <script src="https://cdn.tailwindcss.com">
   </script>
@@ -45,24 +45,24 @@
     </div>
     <div class="flex space-x-8">
      <a class="text-[#8a7f6d] hover:text-black" href="../index.html">
-      Home
+      首頁
      </a>
-     <a class="text-[#8a7f6d] hover:text-black" href="#">
-      Blog
+     <a class="text-[#8a7f6d] hover:text-black" href="note.html">
+      課堂筆記
      </a>
-     <a class="text-[#8a7f6d] hover:text-black" href="daily.html">
+     <a class="text-[#8a7f6d] hover:text-black" href="activity.html">
       每日紀錄
      </a>
-     <a class="text-[#8a7f6d] hover:text-black" href="#">
-      About
+     <a class="text-[#8a7f6d] hover:text-black" href="stock.html">
+      股票紀錄
      </a>
      <a class="text-[#8a7f6d] hover:text-black" href="#">
-      Contact
+      關於我
      </a>
     </div>
     <div class="flex items-center space-x-4">
      <div class="relative">
-      <input class="border rounded-full px-4 py-1" placeholder="Search..." type="text"/>
+      <input class="border rounded-full px-4 py-1" placeholder="搜尋..." type="text"/>
       <i class="fas fa-search absolute right-3 top-2 text-gray-500">
       </i>
      </div>
@@ -92,18 +92,32 @@
      每日活動紀錄
     </h2>
     <p class="text-lg text-gray-600">
-     紀錄每天的電腦活動
+     紀錄每天的電腦使用情況與學習進度
     </p>
+    <div class="mt-4 flex justify-center space-x-4">
+     <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+      <i class="fas fa-chart-line mr-1"></i>
+      使用統計
+     </span>
+     <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+      <i class="fas fa-clock mr-1"></i>
+      時間追蹤
+     </span>
+     <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
+      <i class="fas fa-graduation-cap mr-1"></i>
+      學習記錄
+     </span>
+    </div>
    </div>
    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
     <div class="bg-white border rounded-lg overflow-hidden shadow-lg">
-     <a href="src/daily/2025-02-15.html">
+     <a href="daily/2025-02-15.html">
       <img alt="Activity image" class="w-full h-48 object-cover" src="img/activity/20250215_usage_log.png"/>
      </a>
      <div class="p-4">
       <div class="flex items-center text-gray-500 text-sm mb-2">
        <span class="mr-2">
-        Admin
+        管理員
        </span>
        <span>
         •
@@ -112,7 +126,7 @@
         2025-02-15
        </span>
       </div>
-      <a href="src/daily/2025-02-15.html">
+      <a href="daily/2025-02-15.html">
        <h3 class="text-lg font-semibold mb-2">
         02月15日
        </h3>
@@ -134,13 +148,13 @@
      </div>
     </div>
     <div class="bg-white border rounded-lg overflow-hidden shadow-lg">
-     <a href="src/daily/2025-02-13.html">
+     <a href="daily/2025-02-13.html">
       <img alt="Activity image" class="w-full h-48 object-cover" src="img/activity/20250213_usage_log.png"/>
      </a>
      <div class="p-4">
       <div class="flex items-center text-gray-500 text-sm mb-2">
        <span class="mr-2">
-        Admin
+        管理員
        </span>
        <span>
         •
@@ -149,7 +163,7 @@
         2025-02-13
        </span>
       </div>
-      <a href="src/daily/2025-02-13.html">
+      <a href="daily/2025-02-13.html">
        <h3 class="text-lg font-semibold mb-2">
         02月13日
        </h3>
@@ -171,13 +185,13 @@
      </div>
     </div>
     <div class="bg-white border rounded-lg overflow-hidden shadow-lg">
-     <a href="src/daily/2025-02-12.html">
+     <a href="daily/2025-02-12.html">
       <img alt="Activity image" class="w-full h-48 object-cover" src="img/activity/20250212_usage_log.png"/>
      </a>
      <div class="p-4">
       <div class="flex items-center text-gray-500 text-sm mb-2">
        <span class="mr-2">
-        Admin
+        管理員
        </span>
        <span>
         •
@@ -186,7 +200,7 @@
         2025-02-12
        </span>
       </div>
-      <a href="src/daily/2025-02-12.html">
+      <a href="daily/2025-02-12.html">
        <h3 class="text-lg font-semibold mb-2">
         02月12日
        </h3>
@@ -215,7 +229,7 @@
      <div class="p-4">
       <div class="flex items-center text-gray-500 text-sm mb-2">
        <span class="mr-2">
-        Admin
+        管理員
        </span>
        <span>
         •
@@ -253,7 +267,7 @@
      <div class="p-4">
       <div class="flex items-center text-gray-500 text-sm mb-2">
        <span class="mr-2">
-        Admin
+        管理員
        </span>
        <span>
         •
@@ -284,10 +298,33 @@
      </div>
     </div>
    </div>
-   <!-- Load More Button -->
+   <!-- Statistics Section -->
+   <div class="mt-12 bg-white rounded-lg shadow-lg p-8">
+    <h3 class="text-2xl font-serif text-black text-center mb-6">使用統計概覽</h3>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+     <div class="text-center">
+      <div class="text-3xl font-bold text-blue-600 mb-2">15</div>
+      <div class="text-gray-600">總記錄天數</div>
+     </div>
+     <div class="text-center">
+      <div class="text-3xl font-bold text-green-600 mb-2">8.5</div>
+      <div class="text-gray-600">平均使用時數</div>
+     </div>
+     <div class="text-center">
+      <div class="text-3xl font-bold text-purple-600 mb-2">12</div>
+      <div class="text-gray-600">主要應用程式</div>
+     </div>
+     <div class="text-center">
+      <div class="text-3xl font-bold text-orange-600 mb-2">95%</div>
+      <div class="text-gray-600">學習時間占比</div>
+     </div>
+    </div>
+   </div>
+
+   <!-- 載入更多按鈕 -->
    <div class="flex justify-center mt-8">
     <button class="border border-black text-black px-6 py-2 hover:bg-black hover:text-white transition duration-300">
-     Load More
+     載入更多記錄
     </button>
    </div>
   </div>

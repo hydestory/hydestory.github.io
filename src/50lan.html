@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#163b87" />
-    <title>50嵐飲品背誦練習</title>
+    <title>50嵐飲品數據查詢</title>
     <meta name="description" content="用於練習背誦 50嵐 各項飲品與數據的精美首頁" />
     <style>
       :root {
@@ -153,6 +153,58 @@
       .table th { color: #cbd5e1; font-weight: 700; background: #0e1730; position: sticky; top: 0; }
       .kbd { display: inline-block; padding: 1px 6px; font-size: 12px; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 6px; background: #0f1731; color: #cbd5e1; }
       .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+      /* Light theme overrides */
+      body.theme-light {
+        --text: #1f2937;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+        --card: #ffffff;
+        --bg: #f5f0e1;
+        color: #1f2937;
+        background: linear-gradient(180deg, #f5f0e1 0%, #e8ddd4 100%);
+      }
+      body.theme-light header {
+        background: #f5f0e1;
+        border-bottom-color: #e5e7eb;
+        backdrop-filter: saturate(120%) blur(8px);
+      }
+      body.theme-light .card {
+        background: var(--card);
+        border-color: var(--border);
+      }
+      body.theme-light .btn {
+        background: #ffffff;
+        color: #374151;
+        border-color: var(--border);
+      }
+      body.theme-light .btn:hover {
+        border-color: #d1d5db;
+        background: #f9fafb;
+      }
+      body.theme-light .btn.primary { color: #ffffff; }
+      body.theme-light .subtle { color: var(--muted); }
+      body.theme-light .glass {
+        background: rgba(255,255,255,0.7);
+        border-color: var(--border);
+        box-shadow: 0 10px 30px rgba(2,8,23,0.18), inset 0 1px 0 rgba(255,255,255,0.5);
+      }
+      body.theme-light .stat { background: #f9fafb; border-color: #e5e7eb; }
+      body.theme-light .table th { background: #f3f4f6; color: #374151; }
+      body.theme-light .table td { border-bottom-color: var(--border); }
+      body.theme-light .chip { background: #ffffff; border-color: var(--border); }
+      /* 針對標題、導覽按鈕、選中狀態的杯型/冰量按鈕調整顏色對比 */
+      body.theme-light .card h3 { color: #111827; }
+      body.theme-light .lead { color: var(--muted); }
+      body.theme-light a.btn.primary,
+      body.theme-light button.btn.primary { color: #ffffff !important; }
+      body.theme-light .btn.primary {
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        border-color: #3b5fb0;
+      }
+      /* 確保未選中按鈕在淺色下有清楚對比 */
+      body.theme-light .btn { color: #374151; background: #ffffff; border-color: var(--border); }
+      body.theme-light .btn:hover { background: #f9fafb; border-color: #d1d5db; }
     </style>
   </head>
   <body>
@@ -165,6 +217,7 @@
         <nav class="nav-actions">
           <a class="btn" href="#concepts">觀念介紹</a>
           <a class="btn primary" href="#quick-calc">快速試算</a>
+          <button class="btn" id="theme-toggle" aria-label="切換深淺模式" title="切換深淺模式"></button>
         </nav>
       </div>
     </header>
@@ -173,9 +226,9 @@
       <section class="hero">
         <div class="container hero-grid">
           <div>
-            <div class="eyebrow">記憶強化 · 隨點隨練</div>
-            <h1>以更聰明的方式練習背誦 50嵐飲品數據</h1>
-            <p class="lead">為「糖度、冰量、配方、加料、杯型」打造的練習工具。清晰的介面、快速的操作、舒適的色彩，讓你專注在記憶與實戰。</p>
+            <div class="eyebrow">快速查詢，多種練習</div>
+            <h1>快速試算與練習50嵐飲品數據</h1>
+            <p class="lead">在50嵐打工時有感而發有感而發</p>
             <div class="hero-cta">
               <a id="start" class="btn primary" href="#quick-calc">立即試算</a>
               <a class="btn" href="#concepts">觀念介紹</a>
@@ -790,6 +843,38 @@
       setActive(cupButtons, 'large');
       setActive(iceButtons, 'normal');
       loadCatalog();
+
+      // 主題切換 ------------------------------------------------------------
+      const themeKey = 'theme-50lan';
+      const themeToggleBtn = document.getElementById('theme-toggle');
+
+      function setToggleIcon(theme) {
+        if (!themeToggleBtn) return;
+        const sun = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
+        const moon = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+        // light 模式顯示月亮（可切到深色），dark 模式顯示太陽（可切到淺色）
+        themeToggleBtn.innerHTML = theme === 'light' ? moon : sun;
+      }
+
+      function applyTheme(theme) {
+        document.body.classList.toggle('theme-light', theme === 'light');
+        setToggleIcon(theme);
+      }
+
+      (function initTheme() {
+        const saved = localStorage.getItem(themeKey);
+        const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        const initial = saved ? saved : (prefersLight ? 'light' : 'dark');
+        applyTheme(initial);
+      })();
+
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const next = document.body.classList.contains('theme-light') ? 'dark' : 'light';
+          applyTheme(next);
+          localStorage.setItem(themeKey, next);
+        });
+      }
     </script>
   </body>
   </html>

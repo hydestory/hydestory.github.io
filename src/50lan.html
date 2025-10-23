@@ -428,7 +428,8 @@
                     <div style="display:flex; gap:8px; margin-top:6px; flex-wrap:wrap;">
                       <button data-ice="normal" class="btn" id="ice-normal">正常</button>
                       <button data-ice="less" class="btn" id="ice-less">少冰</button>
-                      <button data-ice="slight_none_room" class="btn" id="ice-snr">微/去/常溫</button>
+                      <button data-ice="slight" class="btn" id="ice-slight">微冰</button>
+                      <button data-ice="none" class="btn" id="ice-none">去冰</button>
                       <button data-ice="warm_hot" class="btn" id="ice-warm">溫/熱</button>
                     </div>
                   </div>
@@ -453,6 +454,7 @@
                 <div class="glass" style="padding:14px; display:grid; gap:8px;">
                   <div>基準杯型（有加料則降級）：<strong class="mono" id="qc-base"></strong></div>
                   <div>糖量 S：<strong class="mono" id="qc-sugar">—</strong></div>
+                  <div>拿鐵：<span class="mono" id="qc-latte">—</span></div>
                   <div>果汁/醬：<span class="mono" id="qc-juice-list">—</span></div>
                   <div>粉類：<span class="mono" id="qc-powder-list">—</span></div>
                   <div>其他：<span class="mono" id="qc-other-list">—</span></div>
@@ -655,7 +657,8 @@
               powderKind = /黃金烏龍奶/.test(name) ? 'goldenOolongMilk' : 'milkTea';
             }
 
-            return { name, category, seriesForSugar, seriesForJuice, powderKind };
+            // 保留 JSON 中的所有原始欄位（latteMl, mienTeaPowderG 等），並補充推論欄位
+            return { ...d, seriesForSugar, seriesForJuice, powderKind };
           });
         } catch (e) {
           drinkCatalog = fallbackCatalog;
@@ -675,6 +678,7 @@
       const elSugar = document.getElementById('qc-sugar');
       const elJuice = document.getElementById('qc-juice');
       const elPowder = document.getElementById('qc-powder');
+      const elLatte = document.getElementById('qc-latte');
 
       const cupButtons = {
         small: document.getElementById('cup-small'),
@@ -684,7 +688,8 @@
       const iceButtons = {
         normal: document.getElementById('ice-normal'),
         less: document.getElementById('ice-less'),
-        slight_none_room: document.getElementById('ice-snr'),
+        slight: document.getElementById('ice-slight'),
+        none: document.getElementById('ice-none'),
         warm_hot: document.getElementById('ice-warm')
       };
 
@@ -695,6 +700,7 @@
         drinkName: '',
         actualCup: Cup.large,
         ice: Ice.normal,
+        iceUi: 'normal', // 'normal' | 'less' | 'slight' | 'none' | 'warm_hot'
         sweetness: 1.0
       };
 
@@ -749,6 +755,22 @@
         });
         elBase.textContent = cupLabel(result.baseCup);
         elSugar.textContent = `${fmt(result.sugar)} S`;
+
+        // 拿鐵顯示（1:1 牛奶/純茶）。資料來自 JSON 的 latteMl（每一方的 ml）。
+        if (elLatte) {
+          if (drink.latteMl) {
+            const cupKey = result.baseCup; // small/medium/large
+            const iceKey = ['normal','less','slight','none'].includes(qcState.iceUi) ? qcState.iceUi : 'none';
+            const perSide = drink.latteMl[cupKey]?.[iceKey];
+            if (typeof perSide === 'number') {
+              elLatte.textContent = `牛奶 ${perSide} ml + 純茶 ${perSide} ml`;
+            } else {
+              elLatte.textContent = '—';
+            }
+          } else {
+            elLatte.textContent = '—';
+          }
+        }
         // 舊欄位（單一顯示）
         const elJuiceSingle = document.getElementById('qc-juice');
         const elPowderSingle = document.getElementById('qc-powder');
@@ -798,7 +820,8 @@
         const powderListEl = document.getElementById('qc-powder-list');
         if (powderListEl) {
           if (isMienTea) {
-            powderListEl.textContent = `麵茶粉 ${powderBase.mienTeaPowder[result.baseCup]} g`;
+            const mieG = (drink.mienTeaPowderG && drink.mienTeaPowderG[result.baseCup]) || powderBase.mienTeaPowder[result.baseCup];
+            powderListEl.textContent = `麵茶粉 ${mieG} g`;
           } else if (powders.length) {
             powderListEl.textContent = `${powders.join('，')}（${result.powder ? fmt(result.powder) : '—'}）`;
           } else {
@@ -832,10 +855,11 @@
       cupButtons.medium.addEventListener('click', () => { qcState.actualCup = Cup.medium; setActive(cupButtons, 'medium'); recalcAndRender(); });
       cupButtons.large.addEventListener('click', () => { qcState.actualCup = Cup.large; setActive(cupButtons, 'large'); recalcAndRender(); });
 
-      iceButtons.normal.addEventListener('click', () => { qcState.ice = Ice.normal; setActive(iceButtons, 'normal'); recalcAndRender(); });
-      iceButtons.less.addEventListener('click', () => { qcState.ice = Ice.less; setActive(iceButtons, 'less'); recalcAndRender(); });
-      iceButtons.slight_none_room.addEventListener('click', () => { qcState.ice = Ice.slight_none_room; setActive(iceButtons, 'slight_none_room'); recalcAndRender(); });
-      iceButtons.warm_hot.addEventListener('click', () => { qcState.ice = Ice.warm_hot; setActive(iceButtons, 'warm_hot'); recalcAndRender(); });
+      iceButtons.normal.addEventListener('click', () => { qcState.iceUi = 'normal'; qcState.ice = Ice.normal; setActive(iceButtons, 'normal'); recalcAndRender(); });
+      iceButtons.less.addEventListener('click', () => { qcState.iceUi = 'less'; qcState.ice = Ice.less; setActive(iceButtons, 'less'); recalcAndRender(); });
+      iceButtons.slight.addEventListener('click', () => { qcState.iceUi = 'slight'; qcState.ice = Ice.slight_none_room; setActive(iceButtons, 'slight'); recalcAndRender(); });
+      iceButtons.none.addEventListener('click', () => { qcState.iceUi = 'none'; qcState.ice = Ice.slight_none_room; setActive(iceButtons, 'none'); recalcAndRender(); });
+      iceButtons.warm_hot.addEventListener('click', () => { qcState.iceUi = 'warm_hot'; qcState.ice = Ice.warm_hot; setActive(iceButtons, 'warm_hot'); recalcAndRender(); });
 
       tops.forEach(x => x.addEventListener('change', recalcAndRender));
 

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>機率與統計 - 課堂筆記</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="font-sans bg-[#f5f0e1] text-[#8a7f6d]">
+
+    <!-- Top Bar -->
+    <div class="bg-white border-b">
+        <div class="container mx-auto flex justify-between items-center py-2 px-4">
+            <div class="flex items-center">
+                <span class="text-xl font-bold">Hydestory</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <i class="fas fa-desktop"></i>
+                <i class="fas fa-mobile-alt"></i>
+                <span class="text-sm">按一下編輯即可建立精彩網站</span>
+                <a href="#" class="text-sm text-blue-600">進一步了解</a>
+                <button class="bg-blue-600 text-white px-4 py-1 rounded-full">寄信給我</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="sticky top-0 z-50 bg-[#f5f0e1]">
+        <div class="container mx-auto flex justify-between items-center py-4 px-4">
+            <div class="text-2xl font-serif">Hydestory</div>
+            <div class="flex space-x-8">
+                <a href="../../index.html" class="text-[#8a7f6d] hover:text-black">首頁</a>
+                <a href="../../activity.html" class="text-[#8a7f6d] hover:text-black">每日紀錄</a>
+                <a href="../../note.html" class="text-[#8a7f6d] hover:text-black">課堂筆記</a>
+                <a href="../../stock.html" class="text-[#8a7f6d] hover:text-black">股票紀錄</a>
+                <a href="#" class="text-[#8a7f6d] hover:text-black">關於我</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <input type="text" placeholder="搜尋..." class="border rounded-full px-4 py-1">
+                    <i class="fas fa-search absolute right-3 top-2 text-gray-500"></i>
+                </div>
+                <a href="#" class="text-[#8a7f6d]"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-[#8a7f6d]"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-[#8a7f6d]"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="text-[#8a7f6d]"><i class="fab fa-pinterest"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto py-12">
+        <div class="bg-white border rounded-lg overflow-hidden shadow-lg p-8">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-serif text-black">機率與統計</h2>
+                <div class="flex items-center justify-center text-gray-500 text-sm mb-4">
+                    <span class="mr-2">黃毅然</span>
+                    <span>•</span>
+                    <span class="ml-2">s113-1, 2024</span>
+                </div>
+                <div class="mt-4 flex justify-center space-x-4">
+                    <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
+                        <i class="fas fa-chart-bar mr-1"></i>
+                        機率統計
+                    </span>
+                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                        <i class="fas fa-user mr-1"></i>
+                        黃毅然
+                    </span>
+                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">
+                        <i class="fas fa-star mr-1"></i>
+                        小硬
+                    </span>
+                </div>
+            </div>
+
+            <!-- Note Content -->
+            <div class="text-gray-700 leading-relaxed space-y-6">
+                <div class="text-center mb-8">
+                    <p>點擊按鈕來查看內容</p>
+                </div>
+                <div class="flex justify-center space-x-4 mb-8">
+                    <button onclick="toggleContent('classNotes')" class="border border-black text-black px-6 py-2 hover:bg-black hover:text-white transition duration-300">上課筆記</button>
+                    <button onclick="toggleContent('practiceAnswers')" class="border border-black text-black px-6 py-2 hover:bg-black hover:text-white transition duration-300">練習解答</button>
+                    <button onclick="toggleContent('examAnswers')" class="border border-black text-black px-6 py-2 hover:bg-black hover:text-white transition duration-300">考試解答</button>
+                </div>
+
+                <div id="classNotes" class="hidden">
+                    <h3 class="text-2xl font-semibold">上課筆記</h3>
+                    <div class="space-y-4">
+                        <button onclick="showContent('note-2024-09-26')" class="border border-black text-black px-4 py-2 hover:bg-black hover:text-white transition duration-300">2024-09-26</button>
+                        <button onclick="showContent('note-2024-10-03')" class="border border-black text-black px-4 py-2 hover:bg-black hover:text-white transition duration-300">2024-10-03</button>
+                        <!-- 更多日期按鈕 -->
+                    </div>
+                </div>
+
+                <div id="practiceAnswers" class="hidden">
+                    <h3 class="text-2xl font-semibold">練習解答</h3>
+                    <div class="space-y-4">
+                        <button onclick="showContent('practice-1')" class="border border-black text-black px-4 py-2 hover:bg-black hover:text-white transition duration-300">章節 1</button>
+                        <button onclick="showContent('practice-2')" class="border border-black text-black px-4 py-2 hover:bg-black hover:text-white transition duration-300">章節 2</button>
+                        <!-- 更多章節按鈕 -->
+                    </div>
+                </div>
+
+                <div id="examAnswers" class="hidden">
+                    <h3 class="text-2xl font-semibold">考試解答</h3>
+                    <div class="space-y-4">
+                        <button onclick="showContent('exam-1')" class="border border-black text-black px-4 py-2 hover:bg-black hover:text-white transition duration-300">考試 1</button>
+                        <button onclick="showContent('exam-2')" class="border border-black text-black px-4 py-2 hover:bg-black hover:text-white transition duration-300">考試 2</button>
+                        <!-- 更多考試按鈕 -->
+                    </div>
+                </div>
+
+                <div id="noteContent" class="hidden mt-8 p-4 border rounded-lg bg-gray-100">
+                    <!-- 這裡將顯示選擇的筆記內容 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleContent(contentId) {
+            const contentDivs = document.querySelectorAll('#classNotes, #practiceAnswers, #examAnswers');
+            contentDivs.forEach(div => {
+                if (div.id === contentId) {
+                    div.classList.toggle('hidden');
+                } else {
+                    div.classList.add('hidden');
+                }
+            });
+            document.getElementById('noteContent').classList.add('hidden'); // 隱藏筆記內容
+        }
+
+        function showContent(noteId) {
+        const noteContentDiv = document.getElementById('noteContent');
+        noteContentDiv.classList.remove('hidden');
+
+        let filePath = '';
+
+        switch (noteId) {
+            case 'note-2024-09-26':
+                filePath = 'note/prob_0926.html';
+                break;
+            case 'note-2024-10-03':
+                filePath = 'path/to/your/classNotes_2024-10-03-1.html';
+                break;
+            // 如果還有其他檔案 也依次加入
+            default:
+                noteContentDiv.innerHTML = '<p>未找到對應的內容</p>';
+                return;
+        }
+
+        // 使用AJAX載入內容
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', filePath, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                noteContentDiv.innerHTML = xhr.responseText;
+            } else if (xhr.readyState === 4 && xhr.status !== 200) {
+                noteContentDiv.innerHTML = '<p>無法載入內容 請稍後再試</p>';
+            }
+        };
+        xhr.send();
+    }
+    </script>
+</body>
+</html>

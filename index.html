@@ -1,0 +1,661 @@
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+
+<body class="font-sans">
+    <!-- Top Bar -->
+    <div class="bg-white border-b">
+        <div class="container mx-auto flex justify-between items-center py-2 px-4">
+            <div class="flex items-center">
+                <span class="text-xl font-bold">Hydestory</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <i class="fas fa-desktop"></i>
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="sticky top-0 z-50 bg-[#f5f0e1]">
+        <div class="container mx-auto flex justify-between items-center py-4 px-4">
+            <div class="text-2xl font-serif">Roger</div>
+            <div class="flex space-x-8">
+                <a href="#" class="text-[#8a7f6d] hover:text-black">首頁</a>
+                <a href="src/stock.html" class="text-[#8a7f6d] hover:text-black">股票紀錄</a>
+                <a href="src/note.html" class="text-[#8a7f6d] hover:text-black">課堂筆記</a>
+                <a href="src/activity.html" class="text-[#8a7f6d] hover:text-black">每日紀錄</a>
+                <a href="src/50lan.html" class="text-[#8a7f6d] hover:text-black">50嵐數據</a>
+                <a href="#" class="text-[#8a7f6d] hover:text-black">關於我</a>
+                <a href="#" class="text-[#8a7f6d] hover:text-black">聯絡我</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="搜尋..." class="border rounded-full px-4 py-1 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <i class="fas fa-search absolute right-3 top-2 text-gray-500"></i>
+                    <!-- 搜索建議下拉選單 -->
+                    <div id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 z-50 hidden" style="display: none;">
+                        <div class="p-2">
+                            <div class="text-xs text-gray-500 mb-2 px-2">猜你想查</div>
+                            <div class="space-y-1">
+                                <div class="search-suggestion px-3 py-2 hover:bg-gray-100 cursor-pointer rounded" data-target="projects">
+                                    <i class="fas fa-project-diagram text-blue-500 mr-2"></i>
+                                    <span>我的專案</span>
+                                </div>
+                                <div class="search-suggestion px-3 py-2 hover:bg-gray-100 cursor-pointer rounded" data-target="courses" data-url="src/note.html">
+                                    <i class="fas fa-graduation-cap text-green-500 mr-2"></i>
+                                    <span>課堂筆記</span>
+                                </div>
+                                <div class="search-suggestion px-3 py-2 hover:bg-gray-100 cursor-pointer rounded" data-target="activity" data-url="src/activity.html">
+                                    <i class="fas fa-chart-line text-purple-500 mr-2"></i>
+                                    <span>每日紀錄</span>
+                                </div>
+                                <div class="search-suggestion px-3 py-2 hover:bg-gray-100 cursor-pointer rounded" data-target="stock" data-url="src/stock.html">
+                                    <i class="fas fa-chart-bar text-red-500 mr-2"></i>
+                                    <span>股票紀錄</span>
+                                </div>
+                                <div class="search-suggestion px-3 py-2 hover:bg-gray-100 cursor-pointer rounded" data-target="weather">
+                                    <i class="fas fa-cloud-sun text-blue-400 mr-2"></i>
+                                    <span>天氣系統</span>
+                                </div>
+                                <div class="search-suggestion px-3 py-2 hover:bg-gray-100 cursor-pointer rounded" data-target="youtube">
+                                    <i class="fab fa-youtube text-red-600 mr-2"></i>
+                                    <span>YouTube 字幕下載</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="text-[#8a7f6d]"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-[#8a7f6d]"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-[#8a7f6d]"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="text-[#8a7f6d]"><i class="fab fa-pinterest"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-[#f5f0e1] to-[#e8ddd4] py-20">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h1 class="text-5xl font-serif mb-6 text-[#8a7f6d]">你好，我是 Roger</h1>
+                    <p class="text-xl mb-6 text-gray-700">程式設計師 | AI 愛好者 | 數據分析師</p>
+                    <p class="text-lg mb-8 text-gray-600">專精於 Python 開發、AI 整合與個人數位生活管理系統建構</p>
+                    <div class="flex space-x-4">
+                        <a href="src/activity.html" class="bg-[#8a7f6d] text-white px-6 py-3 rounded-full hover:bg-[#6b5d4f] transition duration-300">
+                            查看我的作品
+                        </a>
+                        <a href="#contact" class="border border-[#8a7f6d] text-[#8a7f6d] px-6 py-3 rounded-full hover:bg-[#8a7f6d] hover:text-white transition duration-300">
+                            聯絡我
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="src/image/roger2.jpg" alt="Roger" class="w-80 h-80 object-cover rounded-full mx-auto shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weather & Stats Dashboard -->
+    <div id="dashboard" class="bg-white py-12">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-serif text-center mb-8 text-[#8a7f6d]">即時數據儀表板</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Weather Card -->
+                <div class="bg-gradient-to-br from-blue-400 to-blue-600 text-white p-6 rounded-lg shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <i class="fas fa-cloud-sun text-3xl"></i>
+                        <span class="text-sm">台北市</span>
+                    </div>
+                    <div class="text-3xl font-bold mb-2" id="weather-temp">--°C</div>
+                    <div class="text-lg" id="weather-condition">載入中...</div>
+                    <div class="text-sm mt-2" id="weather-details">降雨機率: --%</div>
+                </div>
+                
+                <!-- App Usage Card -->
+                <div class="bg-gradient-to-br from-green-400 to-green-600 text-white p-6 rounded-lg shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <i class="fas fa-chart-bar text-3xl"></i>
+                        <span class="text-sm">今日使用</span>
+                    </div>
+                    <div class="text-3xl font-bold mb-2" id="app-usage">-- 小時</div>
+                    <div class="text-lg">應用程式使用時間</div>
+                    <div class="text-sm mt-2">最常用: <span id="top-app">載入中...</span></div>
+                </div>
+                
+                <!-- Learning Progress Card -->
+                <div class="bg-gradient-to-br from-purple-400 to-purple-600 text-white p-6 rounded-lg shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <i class="fas fa-graduation-cap text-3xl"></i>
+                        <span class="text-sm">學習進度</span>
+                    </div>
+                    <div class="text-3xl font-bold mb-2" id="study-hours">-- 小時</div>
+                    <div class="text-lg">本週學習時間</div>
+                    <div class="text-sm mt-2">筆記數量: <span id="note-count">-- 篇</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills & Projects Section -->
+    <div id="projects" class="bg-[#FCFCFC] py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-serif text-[#8a7f6d]">我的專長與專案</h2>
+                <p class="text-lg text-gray-600 mt-4">結合程式設計、AI 技術與個人數位生活管理</p>
+            </div>
+            
+            <!-- Skills Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                <div class="text-center p-6 bg-white rounded-lg shadow-md">
+                    <i class="fab fa-python text-4xl text-blue-500 mb-3"></i>
+                    <h3 class="font-semibold">Python</h3>
+                    <p class="text-sm text-gray-600">Flask, AI 整合</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-lg shadow-md">
+                    <i class="fas fa-brain text-4xl text-purple-500 mb-3"></i>
+                    <h3 class="font-semibold">AI 技術</h3>
+                    <p class="text-sm text-gray-600">OpenAI, 數據分析</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-lg shadow-md">
+                    <i class="fas fa-chart-line text-4xl text-green-500 mb-3"></i>
+                    <h3 class="font-semibold">數據視覺化</h3>
+                    <p class="text-sm text-gray-600">Matplotlib, 統計圖表</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-lg shadow-md">
+                    <i class="fas fa-mobile-alt text-4xl text-orange-500 mb-3"></i>
+                    <h3 class="font-semibold">系統監控</h3>
+                    <p class="text-sm text-gray-600">應用程式追蹤</p>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Project 1: Weather System -->
+                <div id="weather" class="bg-white border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                        <i class="fas fa-cloud-sun text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-gray-500 text-sm mb-3">
+                            <span class="mr-2">專案</span>
+                            <span>•</span>
+                            <span class="ml-2">Python</span>
+                            <span>•</span>
+                            <span class="ml-2">API 整合</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">天氣資訊系統</h3>
+                        <p class="text-gray-600 mb-4">整合中央氣象局 API，提供即時天氣資訊與中英文翻譯功能</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-2">
+                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Python</span>
+                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">API</span>
+                            </div>
+                            <a href="weather.py" class="text-blue-600 hover:text-blue-800">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: App Usage Tracker -->
+                <div class="bg-white border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+                        <i class="fas fa-chart-bar text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-gray-500 text-sm mb-3">
+                            <span class="mr-2">專案</span>
+                            <span>•</span>
+                            <span class="ml-2">系統監控</span>
+                            <span>•</span>
+                            <span class="ml-2">數據分析</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">應用程式使用追蹤</h3>
+                        <p class="text-gray-600 mb-4">即時監控應用程式使用時間，自動生成統計圖表與 AI 分析摘要</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-2">
+                                <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Python</span>
+                                <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">AI</span>
+                            </div>
+                            <a href="src/activity.html" class="text-blue-600 hover:text-blue-800">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: YouTube Subtitle Downloader -->
+                <div id="youtube" class="bg-white border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="h-48 bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">
+                        <i class="fab fa-youtube text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-gray-500 text-sm mb-3">
+                            <span class="mr-2">專案</span>
+                            <span>•</span>
+                            <span class="ml-2">Web 工具</span>
+                            <span>•</span>
+                            <span class="ml-2">字幕下載</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">YouTube 字幕下載器</h3>
+                        <p class="text-gray-600 mb-4">快速下載 YouTube 影片字幕，支援多種語言格式與自動翻譯功能</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-2">
+                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">YouTube API</span>
+                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">字幕</span>
+                            </div>
+                            <a href="#" class="text-blue-600 hover:text-blue-800" id="youtube-subtitle-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Personal Website -->
+                <div class="bg-white border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300">
+                    <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
+                        <i class="fas fa-laptop-code text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-gray-500 text-sm mb-3">
+                            <span class="mr-2">專案</span>
+                            <span>•</span>
+                            <span class="ml-2">Web 開發</span>
+                            <span>•</span>
+                            <span class="ml-2">響應式設計</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">個人數位生活管理系統</h3>
+                        <p class="text-gray-600 mb-4">整合部落格、筆記系統、股票記錄與活動追蹤的個人網站</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex space-x-2">
+                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">HTML</span>
+                                <span class="bg-cyan-100 text-cyan-800 text-xs px-2 py-1 rounded">Tailwind</span>
+                            </div>
+                            <a href="#" class="text-blue-600 hover:text-blue-800">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-8">
+                <a href="src/activity.html" class="border border-[#8a7f6d] text-[#8a7f6d] px-10 py-3 hover:bg-[#8a7f6d] hover:text-white transition duration-300 rounded-full">
+                    查看更多專案
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="bg-[#f5f0e1] py-12">
+        <div class="container mx-auto flex flex-col md:flex-row items-center">
+            <div class="w-full md:w-1/2 p-4 text-center">
+                <h2 class="text-3xl font-serif mb-4">關於我</h2>
+                <img src="src/image/roger2.jpg" alt="roger" class="w-48 h-auto mb-4 ml-64">
+                <p class="text-gray-700 mb-4">本人.png</p>
+                <button class="border border-black text-black px-10 py-3 hover:bg-black hover:text-white transition duration-300">了解更多</button>
+            </div>
+            <div class="w-full md:w-1/2 p-4">
+                <div class="bg-gray-100 rounded-lg p-8 text-center">
+                    <i class="fas fa-user-circle text-6xl text-gray-400 mb-4"></i>
+                    <p class="text-gray-600">更多個人資訊即將推出</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="container mx-auto p-8">
+        <div class="flex justify-between space-x-16">
+            <div class="w-1/2">
+                <div class="flex space-x-4 mb-8">
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-youtube"></i>
+                    <i class="fab fa-pinterest"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">Sign Up For My Latest</h2>
+                <form>
+                    <label class="block mb-2">Email *</label>
+                    <input type="email" class="w-full border-b-2 border-gray-300 mb-4 p-2" required>
+                    <div class="flex items-center mb-4">
+                        <input type="checkbox" id="subscribe" class="mr-2">
+                        <label for="subscribe">Yes, subscribe me to your newsletter.</label>
+                    </div>
+                    <button type="submit" class="border border-black px-4 py-2">Join</button>
+                </form>
+                <h2 class="text-3xl font-bold mt-8 mb-4">Collabs</h2>
+                <p>For PR and commercial enquiries please contact:</p>
+                <p>info@mysite.com</p>
+            </div>
+            <div class="w-1/2" id="contact">
+                <h2 class="text-3xl font-bold mb-4">聯絡我</h2>
+                <p class="text-gray-600 mb-6">有任何問題或合作機會，歡迎與我聯繫！</p>
+                <form id="contact-form">
+                    <div class="flex space-x-4 mb-4">
+                        <div class="w-1/2">
+                            <label class="block mb-2">姓名 *</label>
+                            <input type="text" id="from_name" name="from_name" class="w-full border-b-2 border-gray-300 p-2" required>
+                        </div>
+                        <div class="w-1/2">
+                            <label class="block mb-2">公司/學校</label>
+                            <input type="text" id="company" name="company" class="w-full border-b-2 border-gray-300 p-2">
+                        </div>
+                    </div>
+                    <label class="block mb-2">Email *</label>
+                    <input type="email" id="from_email" name="from_email" class="w-full border-b-2 border-gray-300 mb-4 p-2" required>
+                    <label class="block mb-2">主題</label>
+                    <select id="subject" name="subject" class="w-full border-b-2 border-gray-300 mb-4 p-2">
+                        <option value="專案合作">專案合作</option>
+                        <option value="技術諮詢">技術諮詢</option>
+                        <option value="工作機會">工作機會</option>
+                        <option value="其他">其他</option>
+                    </select>
+                    <label class="block mb-2">訊息</label>
+                    <textarea id="message" name="message" class="w-full border-b-2 border-gray-300 mb-4 p-2" rows="4" required></textarea>
+                    <button type="submit" id="submit-btn" class="bg-[#8a7f6d] text-white px-6 py-2 rounded-full hover:bg-[#6b5d4f] transition duration-300">
+                        <span id="btn-text">送出訊息</span>
+                        <span id="btn-loading" class="hidden">
+                            <i class="fas fa-spinner fa-spin mr-2"></i>發送中...
+                        </span>
+                    </button>
+                    <div class="mt-4 text-center">
+                        <p class="text-sm text-gray-500">或直接發送郵件至：</p>
+                        <a href="mailto:roger042897@gmail.com" class="text-[#8a7f6d] hover:text-black font-medium">
+                            roger042897@gmail.com
+                        </a>
+                    </div>
+                </form>
+                <div class="mt-8 flex space-x-4">
+                    <a href="mailto:roger042897@gmail.com" class="text-[#8a7f6d] hover:text-black">
+                        <i class="fas fa-envelope mr-2"></i>Email
+                    </a>
+                    <a href="https://github.com/hydestory" class="text-[#8a7f6d] hover:text-black">
+                        <i class="fab fa-github mr-2"></i>GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/yourprofile" class="text-[#8a7f6d] hover:text-black">
+                        <i class="fab fa-linkedin mr-2"></i>LinkedIn
+                    </a>
+                </div>
+                <p class="mt-8 text-sm text-gray-500">© 2024 by Roger. 個人數位生活管理系統</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Dynamic Features -->
+    <script src="static/js/weather-integration.js"></script>
+    <script>
+        // 平滑滾動到指定區塊
+        function smoothScrollTo(targetId) {
+            const target = document.getElementById(targetId);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // 初始化 EmailJS
+        (function() {
+            emailjs.init("iVqyhJ2_yWdZLbdl7");
+        })();
+
+        // 檢查 EmailJS 是否已正確設置
+        const isEmailJSSetup = window.emailjs && 
+                               window.emailjs.init && 
+                               typeof window.emailjs.init === 'function';
+
+        // 表單提交處理
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            const btnLoading = document.getElementById('btn-loading');
+            
+            // 顯示載入狀態
+            submitBtn.disabled = true;
+            btnText.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+            
+            // 獲取表單數據
+            const formData = {
+                from_name: document.getElementById('from_name').value,
+                from_email: document.getElementById('from_email').value,
+                company: document.getElementById('company').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+                to_email: 'roger042897@gmail.com'
+            };
+            
+            // 檢查 EmailJS 是否已設置
+            if (!isEmailJSSetup || 
+                typeof emailjs === 'undefined' || 
+                !emailjs.send) {
+                // 如果 EmailJS 未設置，使用備用方案
+                console.log('EmailJS 未設置，使用備用方案');
+                setTimeout(() => {
+                    // 模擬發送過程
+                    showMessage('感謝您的訊息！由於郵件服務尚未設置，請直接發送郵件至 roger042897@gmail.com', 'success');
+                    document.getElementById('contact-form').reset();
+                    
+                    // 恢復按鈕狀態
+                    submitBtn.disabled = false;
+                    btnText.classList.remove('hidden');
+                    btnLoading.classList.add('hidden');
+                }, 1500);
+                return;
+            }
+            
+            // 如果 EmailJS 已設置，使用真實發送
+            try {
+                emailjs.send('service_8seq3kh', 'template_i2e7ga7', formData)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        showMessage('感謝您的訊息！我會盡快回覆。', 'success');
+                        document.getElementById('contact-form').reset();
+                    }, function(error) {
+                        console.log('FAILED...', error);
+                        showMessage('發送失敗，請稍後再試或直接發送郵件至 roger042897@gmail.com', 'error');
+                    })
+                    .finally(function() {
+                        // 恢復按鈕狀態
+                        submitBtn.disabled = false;
+                        btnText.classList.remove('hidden');
+                        btnLoading.classList.add('hidden');
+                    });
+            } catch (error) {
+                console.error('EmailJS 錯誤:', error);
+                showMessage('郵件服務暫時無法使用，請直接發送郵件至 roger042897@gmail.com', 'error');
+                
+                // 恢復按鈕狀態
+                submitBtn.disabled = false;
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+            }
+        }
+        
+        // 顯示訊息
+        function showMessage(message, type) {
+            // 創建訊息元素
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+            }`;
+            messageDiv.textContent = message;
+            
+            // 添加到頁面
+            document.body.appendChild(messageDiv);
+            
+            // 3秒後自動移除
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
+        // 頁面載入完成後執行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 綁定表單提交事件
+            const contactForm = document.querySelector('#contact form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', handleFormSubmit);
+            }
+
+            // 綁定聯絡我按鈕點擊事件
+            const contactButtons = document.querySelectorAll('a[href="#contact"]');
+            contactButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    smoothScrollTo('contact');
+                });
+            });
+
+            // 添加滾動效果
+            window.addEventListener('scroll', function() {
+                const nav = document.querySelector('.sticky');
+                if (window.scrollY > 100) {
+                    nav.classList.add('shadow-lg');
+                } else {
+                    nav.classList.remove('shadow-lg');
+                }
+            });
+
+            // 搜尋功能
+            const searchInput = document.getElementById('searchInput');
+            const searchSuggestions = document.getElementById('searchSuggestions');
+            
+            console.log('搜索框元素:', searchInput);
+            console.log('搜索建議元素:', searchSuggestions);
+            
+            if (searchInput && searchSuggestions) {
+                console.log('搜索功能初始化成功');
+                // 搜索建議數據
+                const searchData = {
+                    '專案': { target: 'projects', type: 'section' },
+                    'project': { target: 'projects', type: 'section' },
+                    'projects': { target: 'projects', type: 'section' },
+                    '課堂筆記': { target: 'courses', type: 'page', url: 'src/note.html' },
+                    '筆記': { target: 'courses', type: 'page', url: 'src/note.html' },
+                    'note': { target: 'courses', type: 'page', url: 'src/note.html' },
+                    'notes': { target: 'courses', type: 'page', url: 'src/note.html' },
+                    '每日紀錄': { target: 'activity', type: 'page', url: 'src/activity.html' },
+                    '活動': { target: 'activity', type: 'page', url: 'src/activity.html' },
+                    'activity': { target: 'activity', type: 'page', url: 'src/activity.html' },
+                    '股票紀錄': { target: 'stock', type: 'page', url: 'src/stock.html' },
+                    '股票': { target: 'stock', type: 'page', url: 'src/stock.html' },
+                    'stock': { target: 'stock', type: 'page', url: 'src/stock.html' },
+                    '天氣': { target: 'weather', type: 'section' },
+                    'weather': { target: 'weather', type: 'section' },
+                    'youtube': { target: 'youtube', type: 'section' },
+                    '字幕': { target: 'youtube', type: 'section' },
+                    '下載': { target: 'youtube', type: 'section' }
+                };
+
+                // 點擊搜索框顯示建議
+                searchInput.addEventListener('focus', function() {
+                    console.log('搜索框獲得焦點');
+                    searchSuggestions.style.display = 'block';
+                    // 確保所有建議都顯示
+                    const suggestions = document.querySelectorAll('.search-suggestion');
+                    suggestions.forEach(suggestion => {
+                        suggestion.style.display = 'block';
+                    });
+                });
+
+                // 輸入事件處理
+                searchInput.addEventListener('input', function(event) {
+                    const searchTerm = event.target.value.toLowerCase().trim();
+                    
+                    if (searchTerm.length > 0) {
+                        // 顯示搜索建議
+                        searchSuggestions.style.display = 'block';
+                        
+                        // 過濾建議
+                        const suggestions = document.querySelectorAll('.search-suggestion');
+                        suggestions.forEach(suggestion => {
+                            const text = suggestion.textContent.toLowerCase();
+                            if (text.includes(searchTerm)) {
+                                suggestion.style.display = 'block';
+                            } else {
+                                suggestion.style.display = 'none';
+                            }
+                        });
+                    } else {
+                        // 顯示所有建議
+                        searchSuggestions.style.display = 'block';
+                        const suggestions = document.querySelectorAll('.search-suggestion');
+                        suggestions.forEach(suggestion => {
+                            suggestion.style.display = 'block';
+                        });
+                    }
+                });
+
+                // 點擊建議處理
+                const suggestions = document.querySelectorAll('.search-suggestion');
+                suggestions.forEach(suggestion => {
+                    suggestion.addEventListener('click', function() {
+                        const target = this.getAttribute('data-target');
+                        const url = this.getAttribute('data-url');
+                        
+                        if (url) {
+                            // 跳轉到外部頁面
+                            window.location.href = url;
+                        } else {
+                            // 滾動到頁面內區域
+                            const targetElement = document.getElementById(target);
+                            if (targetElement) {
+                                targetElement.scrollIntoView({ 
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                                // 添加高亮效果
+                                targetElement.style.transition = 'all 0.3s ease';
+                                targetElement.style.backgroundColor = '#fef3c7';
+                                setTimeout(() => {
+                                    targetElement.style.backgroundColor = '';
+                                }, 2000);
+                            }
+                        }
+                        
+                        // 隱藏建議並清空搜索框
+                        searchSuggestions.style.display = 'none';
+                        searchInput.value = '';
+                    });
+                });
+
+                // 點擊外部隱藏建議
+                document.addEventListener('click', function(event) {
+                    if (!searchInput.contains(event.target) && !searchSuggestions.contains(event.target)) {
+                        searchSuggestions.style.display = 'none';
+                    }
+                });
+
+                // 鍵盤導航
+                searchInput.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape') {
+                        searchSuggestions.style.display = 'none';
+                    }
+                });
+            }
+
+            // YouTube 字幕下載專案連結處理
+            const youtubeLink = document.getElementById('youtube-subtitle-link');
+            if (youtubeLink) {
+                // 暫時設置為空連結，等待您提供實際連結
+                youtubeLink.href = '#';
+                youtubeLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('YouTube 字幕下載專案連結即將推出！');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

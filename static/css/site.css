@@ -244,3 +244,24 @@ h3 { font-size:25px; font-weight:700; letter-spacing:-.025em; }
  .stock-reading .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media(prefers-reduced-motion:reduce) { .live-project { transition:none; } .live-project:hover { transform:none; } }
+
+/* The hourglass stays in the side rail on wide screens and follows the hero on mobile. */
+.home-sidebar { width:min(1160px,calc(100% - 80px)); margin:0 auto 32px; min-width:0; }
+.hourglass-card { display:grid; grid-template-columns:112px minmax(0,1fr); align-items:center; margin:0; overflow:hidden; border:1px solid #283746; border-radius:16px; background:#070d14; color:#e7dec9; }
+.hourglass-card video { display:block; width:100%; height:auto; aspect-ratio:4/5; object-fit:contain; background:#070d14; }
+.hourglass-caption { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px; }
+.hourglass-caption h2 { font-size:18px; letter-spacing:.08em; }
+.hourglass-caption button { min-width:56px; min-height:44px; padding:7px 12px; border:1px solid #66715f; border-radius:8px; background:transparent; color:#e7dec9; font-size:14px; }
+.hourglass-caption button:hover { background:#263427; }
+@media(min-width:1280px) {
+ .home-layout { display:grid; grid-template-columns:minmax(0,1fr) 220px; column-gap:24px; width:min(1560px,calc(100% - 48px)); margin-inline:auto; align-items:start; }
+ .home-layout>section { grid-column:1; min-width:0; }
+ .home-layout .hero { gap:40px; }
+ .home-sidebar { grid-column:2; grid-row:1 / span 5; position:sticky; top:112px; align-self:start; width:100%; margin:76px 0 32px; }
+ .hourglass-card { display:block; }
+ .hourglass-caption { padding:10px 14px; border-top:1px solid #283746; }
+}
+@media(max-width:560px) {
+ .home-sidebar { width:calc(100% - 40px); }
+ .hourglass-caption { flex-wrap:wrap; }
+}

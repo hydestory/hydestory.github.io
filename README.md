@@ -24,7 +24,8 @@ git diff --check
 - `static/css/site.css`：首頁樣式、共用導覽與手機斷點。
 - `static/js/site.js`：手機選單、聯絡表單；EmailJS SDK 在使用表單時才載入。
 - `static/js/hourglass.js`：首頁側欄沙漏的靜音循環播放與暫停控制；尊重減少動態效果設定。
-- `static/media/hourglass-loop.mp4`：20 秒沙漏循環影片，包含均勻落雪與兩次翻面；手機版卡片顯示在主視覺之後。
+- `static/media/hourglass-loop.mp4`：20 秒沙漏循環影片，包含均勻落雪與兩次翻面；手機版顯示在主視覺之後。
+- 沙漏採白底渲染搭配 `mix-blend-mode: multiply` 融入頁面底色；桌面側欄寬 280–340px，沒有卡片背景、邊框或可見標題列。替換影片或封面時需保留白色背景。
 - `static/js/weather-integration.js`：天氣與應用程式使用紀錄。讀取失敗時不顯示模擬資料。
 - `src/text/usage_log.json`：已保存的應用程式使用秒數，沒有日期欄位，不能解讀為今日即時統計。
 - `src/50lan.html` 與 `src/data/drinks.json`：飲品試算工具及配方資料。

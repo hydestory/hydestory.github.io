@@ -1,0 +1,430 @@
+<!doctype html>
+<!-- Interaction prototype: can native vertical scrolling feel like turning a physical book?
+     Separate from the current homepage so the interaction can be evaluated before adoption. -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#e8ebe4">
+  <title>Roger 的立體書 — Hydestory 互動預覽</title>
+  <link rel="icon" href="static/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --desk:#e8ebe4; --ink:#244638; --paper:#f9f6eb; --gold:#dfcf9d; --muted:#6e7b6d; --page-w:min(39vw,calc((100svh - 245px)*.76),430px); --page-h:calc(var(--page-w) / .76); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:auto; }
+    body { margin:0; color:var(--ink); background:var(--desk); font:14px/1.7 'DM Sans','Microsoft JhengHei',sans-serif; }
+    button,a { -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+    a { color:inherit; text-decoration:none; }
+    button { font:inherit; cursor:pointer; }
+    :is(a,button):focus-visible { outline:3px solid #998142; outline-offset:5px; }
+    button:disabled { cursor:default; opacity:.35; }
+    h1,h2,h3,p { margin:0; }
+    h1,h2,h3 { font-family:'Noto Serif TC',serif; font-weight:600; line-height:1.5; }
+    .topbar { position:fixed; inset:0 0 auto; height:76px; z-index:1000; display:flex; align-items:center; justify-content:space-between; padding:0 38px; background:linear-gradient(var(--desk) 65%,transparent); }
+    .brand { font-size:21px; letter-spacing:-1px; font-weight:700; display:flex; gap:9px; align-items:center; }
+    .brand-mark { display:grid; place-items:center; width:30px; height:30px; border-radius:8px; background:var(--ink); color:var(--paper); font:bold 26px/1 Georgia,serif; padding:0 3px 5px 0; }
+    .brand-slash { color:#82956a; }
+    .top-actions { display:flex; align-items:center; gap:24px; font-size:12px; }
+    .preview-label { color:var(--muted); padding-left:20px; border-left:1px solid #bdc5b8; letter-spacing:2px; font-size:10px; }
+    .mode-button { background:transparent; color:var(--ink); border:1px solid #b9c5b5; border-radius:30px; padding:7px 15px; }
+    .plain-link:hover { text-decoration:underline; text-underline-offset:5px; }
+    .scroll-story { height:660svh; }
+    .stage { position:sticky; top:0; height:100svh; min-height:480px; display:grid; grid-template-columns:minmax(0,1fr); place-items:center; overflow:hidden; perspective:2200px; background:radial-gradient(ellipse at 48% 44%,#f4f4ec 0%,transparent 64%); }
+    .stage:before { content:''; position:absolute; inset:0; pointer-events:none; opacity:.2; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23869080' opacity='.18' filter='url(%23n)' d='M0 0h150v150H0z'/%3E%3C/svg%3E"); }
+    .stage-caption { position:absolute; top:88px; left:0; right:0; text-align:center; color:var(--muted); font-size:10px; letter-spacing:3px; z-index:1; }
+    .book-space { position:relative; width:calc(var(--page-w)*2); height:var(--page-h); transform-style:preserve-3d; transform:translateY(-5px) rotateX(9deg) rotateZ(-1deg); }
+    .book { width:100%; height:100%; position:relative; transform-style:preserve-3d; transform:translateX(calc(var(--page-w)*-.5)); }
+    .book-shadow { position:absolute; left:5%; right:0; top:35%; bottom:-28px; background:#354a3655; filter:blur(32px); border-radius:25%; transform:translateZ(-40px); pointer-events:none; }
+    .board { position:absolute; width:var(--page-w); height:var(--page-h); background:#244b3a; border-radius:3px 9px 9px 3px; box-shadow:0 3px 0 #23412e,0 7px 0 #d5d1be,0 9px 0 #a6a992,0 12px 0 #234936,0 18px 22px #263b3433; transform:translateZ(-5px); }
+    .board-right { left:50%; }
+    .board-left { left:0; border-radius:9px 3px 3px 9px; opacity:0; }
+    .spine { position:absolute; left:calc(50% - 6px); width:12px; top:3px; height:calc(100% + 8px); background:linear-gradient(90deg,#1b3528,#4d6751,#172c20); transform:translateZ(-6px); }
+    .leaf { position:absolute; top:0; left:50%; width:var(--page-w); height:var(--page-h); transform-origin:0 50%; transform-style:preserve-3d; will-change:transform; }
+    .face { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:2px 6px 6px 2px; background:var(--paper); color:#3c4536; overflow:hidden; box-shadow:inset 1px 0 #ddd7c5; }
+    .front { transform:translateZ(.6px); }
+    .back { transform:rotateY(180deg) translateZ(.6px); border-radius:6px 2px 2px 6px; }
+    .face:after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,#383a2929,transparent 10%,transparent 87%,#68644608); pointer-events:none; }
+    .back:after { background:linear-gradient(270deg,#383a292b,transparent 12%,transparent 85%,#68644608); }
+    .flip-shadow { position:absolute; inset:0; z-index:20; background:linear-gradient(90deg,#111d16b3,transparent 85%); opacity:0; pointer-events:none; }
+    .back .flip-shadow { background:linear-gradient(270deg,#111d16b3,transparent 85%); }
+    .paper { height:100%; padding:8% 10% 10%; position:relative; display:flex; flex-direction:column; }
+    .paper-heading { display:flex; justify-content:space-between; align-items:center; font-size:8px; letter-spacing:1.8px; padding-bottom:10px; border-bottom:1px solid #d5d0bd; color:#76806b; }
+    .page-number { position:absolute; bottom:4%; left:10%; right:10%; display:flex; justify-content:space-between; font-size:8px; letter-spacing:1.5px; color:#92947e; }
+    .folio { font:italic 12px Georgia,serif; letter-spacing:0; }
+    .cover { background-color:#264e3e; color:var(--gold); box-shadow:inset 5px 0 6px #0b2419aa,inset -1px 0 #71957880,1px 1px 0 #173d2c; }
+    .cover:before { content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(0deg,transparent 0 2px,#ffffff08 2px 3px),repeating-linear-gradient(90deg,transparent 0 2px,#031a1426 2px 3px); pointer-events:none; }
+    .cover:after { background:linear-gradient(90deg,#0005,transparent 7%,#ffffff0b 8%,transparent 10%); }
+    .cover-border { position:absolute; inset:6% 7% 6% 10%; border:1px solid #ccbe884f; border-radius:1px; pointer-events:none; }
+    .cover-inner { position:relative; height:100%; padding:12% 14%; display:flex; flex-direction:column; align-items:flex-start; }
+    .edition { font-size:8px; letter-spacing:2.5px; color:#bbbf9b; }
+    .cover-title { font-size:clamp(28px,3.25vw,46px); margin-top:15%; letter-spacing:1px; text-shadow:0 1px 1px #06180a; }
+    .cover-subtitle { font-size:10px; letter-spacing:1.3px; line-height:1.9; color:#bec8ae; margin-top:6%; }
+    .cover-symbol { width:78px; height:78px; margin:auto 0; position:relative; display:grid; place-items:center; }
+    .cover-symbol:before,.cover-symbol:after { content:''; position:absolute; inset:0; border:1px solid #d4c78b8f; border-radius:50%; }
+    .cover-symbol:after { inset:12px; border-style:dotted; }
+    .cover-symbol span { font:italic 38px Georgia,serif; transform:rotate(-10deg); }
+    .cover-bottom { width:100%; display:flex; justify-content:space-between; align-items:center; font-size:9px; letter-spacing:1.4px; }
+    .cover-bottom strong { font-size:13px; font-weight:500; letter-spacing:1px; }
+    .ribbon { position:absolute; right:13%; top:-2px; width:19px; height:61px; background:#c8b77e; clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%); box-shadow:2px 2px 4px #0002; }
+    .portrait-paper { background:#edeedd; }
+    .portrait-block { position:relative; height:58%; margin-top:7%; padding:9px 9px 25px; background:#fffdf3; box-shadow:0 5px 12px #353c2a17; transform:rotate(-4deg); }
+    .portrait-block img { height:100%; width:100%; object-fit:cover; object-position:center 35%; filter:saturate(.7); }
+    .portrait-block:before { content:''; position:absolute; width:63px; height:20px; background:#d0c28bb3; top:-8px; left:calc(50% - 30px); transform:rotate(3deg); }
+    .hand-note { font-family:'Noto Serif TC',serif; text-align:center; font-size:13px; margin-top:8%; transform:rotate(-3deg); color:#626b50; }
+    .little-note { font-size:9px; text-align:center; margin-top:9px; letter-spacing:1px; color:#7f866a; }
+    .chapter-kicker { color:#8a8d6b; text-transform:uppercase; font-size:8px; letter-spacing:2px; margin-top:6%; }
+    .page-title { font-size:clamp(22px,2.4vw,31px); letter-spacing:-1px; margin-top:3%; line-height:1.4; }
+    .page-copy { font-size:clamp(10px,1vw,12px); line-height:1.85; color:#6b7260; margin-top:4%; }
+    .toc { list-style:none; padding:0; margin:4% 0 0; }
+    .toc button { width:100%; display:flex; align-items:center; justify-content:space-between; color:var(--ink); background:none; border:0; border-bottom:1px solid #d8d6c5; padding:8px 0; font-size:11px; text-align:left; }
+    .toc button:hover { color:#a1833f; }
+    .toc small { color:#93977e; font:italic 12px Georgia,serif; }
+    .page-tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:4%; }
+    .page-tags span { border:1px solid #d3d5bf; border-radius:30px; padding:3px 8px; font-size:8px; color:#737a60; }
+    .project-link { display:flex; align-items:center; justify-content:space-between; font-size:11px; border-top:1px solid #c9cfb3; border-bottom:1px solid #c9cfb3; padding:9px 0; margin-top:auto; color:var(--ink); font-weight:600; }
+    .project-link:hover { color:#9b7631; }
+    .project-link span { font-size:18px; }
+    .project-features { list-style:none; padding:0; margin:4% 0; color:#656f58; font-size:10px; }
+    .project-features li { padding:3px 0 3px 15px; position:relative; }
+    .project-features li:before { content:'·'; position:absolute; left:0; color:#8c9d6f; }
+    .art-page { background:#e6ebda; }
+    .art-page .paper-heading { position:relative; z-index:2; }
+    .island-art { position:relative; height:62%; display:grid; place-items:center; margin:4% -12% 0; perspective:700px; }
+    .ocean { position:absolute; width:230px; height:180px; max-width:93%; border:1px solid #9aa8897d; border-radius:50%; transform:rotateX(58deg) rotateZ(-20deg); background:repeating-radial-gradient(ellipse at center,transparent 0 16px,#9cad881e 17px 18px); box-shadow:0 0 0 17px #cad4b44d,0 0 0 38px #bdcba020; }
+    .island { position:relative; width:157px; height:110px; background:#8ca777; border-radius:50% 45% 42% 35%; transform:rotateX(46deg) rotateZ(-14deg); box-shadow:0 5px #637c57,0 10px #59734f,0 16px #4b6448,0 24px 10px #596d4040; }
+    .hill { position:absolute; left:18px; bottom:23px; width:70px; height:88px; background:linear-gradient(120deg,#d6ddad 50%,#91a47a 51%); clip-path:polygon(50% 0,100% 100%,0 100%); transform:rotateX(-38deg); transform-origin:bottom; }
+    .hill.two { left:66px; height:63px; width:69px; background:linear-gradient(120deg,#b9ca8f 50%,#718a63 51%); }
+    .flag-pole { position:absolute; left:78px; top:-24px; height:60px; width:2px; background:#50603f; transform:rotateX(-40deg); }
+    .flag-pole:after { content:'?'; display:grid; place-items:center; position:absolute; top:0; left:1px; width:24px; height:20px; background:#e7c970; color:#52603d; font:bold 12px Georgia; clip-path:polygon(0 0,100% 10%,85% 100%,0 90%); }
+    .art-word { position:absolute; font:italic 15px Georgia,serif; letter-spacing:1px; color:#80936c; }
+    .word-a { left:8%; top:14%; transform:rotate(-10deg); }
+    .word-b { right:8%; bottom:7%; transform:rotate(8deg); }
+    .art-spark { position:absolute; right:20%; top:9%; color:#9eaa79; font-size:27px; }
+    .art-caption { margin-top:auto; margin-bottom:4%; text-align:center; font-family:'Noto Serif TC',serif; font-size:17px; line-height:1.9; color:#5c714d; }
+    .art-caption small { display:block; margin-top:9px; color:#8a9376; font:8px 'DM Sans',sans-serif; letter-spacing:2px; }
+    .nosfy-paper { background:#eee7ed; }
+    .nosfy-art { position:relative; height:66%; margin-top:3%; display:grid; place-items:center; }
+    .orbit { position:absolute; width:200px; height:200px; max-width:95%; border:1px solid #c4b8c4; border-radius:50%; transform:rotateX(36deg) rotateZ(-15deg); }
+    .orbit:before { content:''; position:absolute; inset:20px; border:1px dashed #c4b8c4; border-radius:50%; }
+    .voice-disc { width:126px; height:126px; border-radius:50%; background:radial-gradient(circle at 38% 28%,#f8f3f4,#dbcedd); box-shadow:0 9px 0 #c5b8c7,0 22px 25px #7c687225,inset 0 0 0 1px #fff7; display:flex; align-items:center; justify-content:center; gap:5px; transform:rotate(-8deg); }
+    .voice-disc i { width:4px; height:20px; background:#9b809e; border-radius:4px; }
+    .voice-disc i:nth-child(2),.voice-disc i:nth-child(6) { height:36px; }
+    .voice-disc i:nth-child(3),.voice-disc i:nth-child(5) { height:51px; }
+    .voice-disc i:nth-child(4) { height:66px; }
+    .speech { position:absolute; background:#fcf8f6; padding:12px 16px; border-radius:10px 10px 10px 1px; color:#8c798a; font-size:10px; box-shadow:0 4px 0 #cfc2ce,0 10px 16px #826c7714; }
+    .speech-one { left:1%; top:15%; transform:rotate(-7deg); }
+    .speech-two { right:-1%; bottom:10%; transform:rotate(5deg); }
+    .nosfy-paper .art-caption { color:#89738b; }
+    .ink-note { padding:7px 10px; background:#eeeedf; border-left:2px solid #c0c7a3; font-size:9px; margin-top:4%; color:#7c856d; }
+    .colophon { justify-content:flex-start; }
+    .colophon .chapter-kicker { display:none; }
+    .colophon .page-title { font-size:31px; margin-top:8%; }
+    .colophon .page-copy { max-width:none; }
+    .mail-address { font-size:clamp(10px,1.25vw,14px); border-bottom:1px solid #b7bfa7; padding:9px 0; margin-top:6%; overflow-wrap:anywhere; }
+    .small-links { display:flex; gap:20px; font-size:11px; margin-top:12px; }
+    .signature { font:italic 30px/1.2 Georgia,serif; margin-top:auto; padding-top:16px; color:#6a7b58; transform:rotate(-6deg); }
+    .closing-paper { background:#e6e6d4; }
+    .archive-stack { position:relative; height:66%; margin-top:4%; }
+    .archive-slip { position:absolute; width:87%; left:7%; padding:16px 18px; background:#faf8ec; border:1px solid #dddcca; box-shadow:0 5px 12px #45513613; font-size:10px; color:#7d8668; }
+    .archive-slip strong { display:block; font-family:'Noto Serif TC',serif; font-size:20px; margin:5px 0 7px; color:#536549; }
+    .archive-slip:nth-child(1) { top:10%; transform:rotate(-8deg); }
+    .archive-slip:nth-child(2) { top:41%; transform:rotate(5deg); }
+    .archive-slip:nth-child(3) { top:70%; transform:rotate(-3deg); }
+    .last-page { position:absolute; top:0; left:50%; width:var(--page-w); height:var(--page-h); transform:translateZ(-1px); border-radius:2px 6px 6px 2px; overflow:hidden; background:var(--paper); }
+    .last-page:after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,#383a2929,transparent 10%); pointer-events:none; }
+    .book-controls { position:fixed; bottom:21px; left:50%; transform:translateX(-50%); width:min(650px,calc(100% - 40px)); z-index:1000; }
+    .scroll-cue { text-align:center; font-size:11px; color:#7a8672; letter-spacing:1px; margin-bottom:13px; }
+    .scroll-cue span { margin-right:8px; font-size:16px; }
+    .control-bar { display:flex; align-items:center; justify-content:space-between; gap:15px; border:1px solid #c1cbb880; border-radius:40px; padding:10px 13px; background:#f7f8f0e8; backdrop-filter:blur(15px); box-shadow:0 8px 22px #344a3610; }
+    .page-arrow { border:1px solid #ccd3c2; color:var(--ink); background:transparent; width:35px; height:35px; border-radius:50%; font-size:17px; }
+    .page-arrow:not(:disabled):hover { background:#e1e8d7; }
+    .chapter-tabs { display:flex; gap:8px; }
+    .chapter-tabs button { border:0; background:none; color:#87917d; font-size:11px; padding:6px 9px; border-radius:20px; }
+    .chapter-tabs button[aria-current=true] { background:#e3e9d9; color:#3c5742; }
+    .chapter-tabs button:hover { color:#314c37; }
+    .book-progress { position:absolute; bottom:-10px; left:30px; right:30px; height:2px; background:#bdc7b54d; border-radius:3px; overflow:hidden; }
+    .book-progress span { display:block; height:100%; width:0; background:#7c946d; }
+    .side-note { position:fixed; left:30px; top:50%; writing-mode:vertical-rl; font-size:8px; color:#909b86; letter-spacing:3px; }
+    .noscript { position:fixed; bottom:100px; left:20px; right:20px; text-align:center; z-index:1000; }
+    .mode-note { display:none; }
+    .mobile-intro { display:none; }
+    .mobile-archives { display:none; }
+    /* Reading mode retains every page and link without perspective or scroll choreography. */
+    body.reading .scroll-story { height:auto; padding:100px 20px 50px; }
+    body.reading .stage { display:block; height:auto; min-height:0; position:static; perspective:none; overflow:visible; background:none; }
+    body.reading .stage:before,body.reading .stage-caption,body.reading .board,body.reading .spine,body.reading .book-shadow,body.reading .side-note,body.reading .book-controls { display:none; }
+    body.reading .book-space,body.reading .book { width:min(880px,100%); height:auto; transform:none!important; margin:0 auto; }
+    body.reading .book { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    body.reading .leaf { display:contents; }
+    body.reading .face,body.reading .last-page { position:relative; inset:auto; height:530px; width:auto; transform:none!important; backface-visibility:visible; box-shadow:0 8px 22px #344a3614; border-radius:8px; }
+    body.reading .face:after,body.reading .flip-shadow,body.reading .last-page:after { display:none; }
+    body.reading .mode-note { display:block; width:min(880px,100%); margin:0 auto 24px; color:#77836d; font-size:12px; }
+    @media(max-width:700px) {
+      :root { --page-w:min(86vw,calc((100svh - 240px)*.76),390px); }
+      .topbar { height:67px; padding:0 20px; }
+      .brand { font-size:19px; }
+      .preview-label { display:none; }
+      .top-actions { gap:12px; font-size:10px; }
+      .mode-button { padding:6px 10px; font-size:10px; }
+      .stage-caption { top:85px; font-size:8px; letter-spacing:2px; }
+      .book-space { transform:translateY(3px) rotateX(5deg); }
+      .side-note { display:none; }
+      .cover-title { font-size:clamp(29px,8vw,43px); }
+      .cover-subtitle { font-size:10px; }
+      .page-title { font-size:28px; }
+      .page-copy { font-size:12px; }
+      .paper-heading { font-size:7px; }
+      .project-features { font-size:11px; }
+      .project-link { font-size:12px; }
+      .chapter-tabs { gap:1px; }
+      .chapter-tabs button { padding:7px 7px; font-size:10px; }
+      .book-controls { bottom:28px; width:calc(100% - 28px); max-width:440px; }
+      .control-bar { gap:7px; padding:9px 10px; }
+      .page-arrow { width:30px; height:30px; flex-shrink:0; }
+      .scroll-cue { font-size:10px; margin-bottom:18px; }
+      .mobile-intro { display:flex; align-items:center; gap:11px; margin-top:6%; font-size:10px; color:#7a856a; }
+      .mobile-intro img { width:34px; height:34px; object-fit:cover; border-radius:50%; }
+      .intro-paper .chapter-kicker { margin-top:5%; }
+      .intro-paper .page-title { font-size:25px; }
+      .intro-paper .page-copy { font-size:11px; margin-top:4%; }
+      .toc { margin-top:4%; }
+      .toc button { padding:7px 0; font-size:11px; }
+      .page-tags { margin-top:5%; }
+      .mail-address { font-size:12px; }
+      .mobile-archives { display:flex; gap:12px; font-size:10px; margin-top:12px; }
+      .colophon .signature { display:none; }
+      body.reading .book { grid-template-columns:1fr; max-width:410px; }
+      body.reading .face,body.reading .last-page { height:530px; }
+    }
+    @media(max-height:610px) and (min-width:701px) {
+      :root { --page-w:min(37vw,calc((100svh - 145px)*.76)); }
+      .topbar { height:50px; }
+      .stage-caption,.side-note,.scroll-cue { display:none; }
+      .book-controls { bottom:15px; }
+      .page-title { font-size:24px; }
+      .page-copy { font-size:10px; }
+      .cover-title { font-size:30px; }
+      .toc button { padding:6px 0; }
+    }
+    @media(max-width:360px) {
+      .topbar { padding-inline:14px; }
+      .brand { font-size:17px; gap:6px; }
+      .brand-mark { width:26px; height:26px; font-size:23px; }
+      .top-actions { gap:8px; font-size:9px; white-space:nowrap; }
+      .mode-button { padding:6px 8px; font-size:9px; white-space:nowrap; }
+      .paper { padding:7% 8% 10%; }
+      .project-features,.intro-paper .page-tags,.mobile-intro { display:none; }
+      .page-title,.colophon .page-title { font-size:25px; }
+      .page-copy { font-size:11px; line-height:1.7; }
+      .chapter-kicker { margin-top:5%; }
+      .mail-address { font-size:10px; margin-top:5%; }
+      .small-links { margin-top:10px; font-size:10px; }
+      .signature { font-size:26px; }
+      .colophon .signature { margin-top:3%; }
+      .chapter-tabs button { font-size:9px; padding:6px 5px; }
+    }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="回到 Hydestory 首頁"><span class="brand-mark" aria-hidden="true">h.</span>hydestory<span class="brand-slash">/</span><span class="preview-label">書本互動預覽</span></a>
+    <div class="top-actions"><button class="mode-button" id="mode-button" type="button" aria-pressed="false">閱讀模式</button><a class="plain-link" href="index.html">一般網頁 ↗</a></div>
+  </header>
+  <main class="scroll-story" id="scroll-story" aria-label="Roger 的互動作品書">
+    <p class="mode-note">閱讀模式：以直式排版呈現所有書頁，不播放翻頁動畫。</p>
+    <div class="stage">
+      <p class="stage-caption">A LITTLE CODE. A LITTLE LIFE. A BOOK BY ROGER.</p>
+      <div class="book-space"><div class="book" id="book">
+        <div class="book-shadow" aria-hidden="true"></div><div class="board board-left" aria-hidden="true"></div><div class="board board-right" aria-hidden="true"></div><div class="spine" aria-hidden="true"></div>
+        <div class="last-page" data-page="8"><div class="paper colophon">
+          <div class="paper-heading"><span>KEEP IN TOUCH</span><span>故事未完</span></div>
+          <p class="chapter-kicker">THE NEXT CHAPTER</p><h2 class="page-title">把故事，<br>接著寫下去。</h2>
+          <p class="page-copy">有個想法，或想一起做點什麼？<br>歡迎寫信，聊聊你的下一個小計畫。</p>
+          <a class="mail-address" href="mailto:roger042897@gmail.com">roger042897@gmail.com ↗</a>
+          <div class="small-links"><a href="https://github.com/hydestory" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="index.html#contact">聯絡表單 ↗</a></div>
+          <nav class="mobile-archives" aria-label="更多作品與紀錄"><a href="src/50lan.html">50嵐工具 ↗</a><a href="src/note.html">筆記 ↗</a><a href="src/activity.html">每日紀錄 ↗</a></nav>
+          <div class="signature">Roger.</div><div class="page-number"><span>TO BE CONTINUED</span><span class="folio">8</span></div>
+        </div></div>
+        <div class="leaf" data-leaf="3">
+          <section class="face front" data-page="6"><div class="paper">
+            <div class="paper-heading"><span>PROJECT / 02</span><span>對話的溫度</span></div>
+            <p class="chapter-kicker">A VOICE COMPANION</p><h2 class="page-title">諾斯菲<span style="display:block;font:italic .68em Georgia,serif;color:#9a8598">Nosfy</span></h2>
+            <p class="page-copy">用文字交換想法，<br>也用聲音讓對話自然發生。<br>一個能放進日常的 AI 對話空間。</p>
+            <ul class="project-features"><li>文字聊天與語音對話</li><li>持續聆聽，也能隨時打斷</li><li>讓每段對話留下紀錄</li></ul>
+            <p class="ink-note">這是私人空間，進入時需要存取碼。</p>
+            <a class="project-link" href="https://nosfy-pwa.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="開啟諾斯菲（另開分頁）">開啟諾斯菲 <span aria-hidden="true">↗</span></a>
+            <div class="page-number"><span>VOICE / TEXT / AI</span><span class="folio">6</span></div>
+          </div><div class="flip-shadow" aria-hidden="true"></div></section>
+          <section class="face back closing-paper" data-page="7"><div class="paper">
+            <div class="paper-heading"><span>SMALL THINGS MATTER</span><span>日常收集</span></div>
+            <div class="archive-stack"><a class="archive-slip" href="src/50lan.html">生活 × 程式<strong>50嵐飲品工具</strong>一杯飲料裡，也藏著邏輯。 ↗</a><a class="archive-slip" href="src/note.html">學習 × 紀錄<strong>課堂筆記</strong>學過的知識，一頁一頁留下。 ↗</a><a class="archive-slip" href="src/activity.html">時間 × 數據<strong>每日紀錄</strong>回看每天的工作與學習節奏。 ↗</a></div>
+            <div class="page-number"><span>A COLLECTION OF EVERYDAY LIFE</span><span class="folio">7</span></div>
+          </div><div class="flip-shadow" aria-hidden="true"></div></section>
+        </div>
+        <div class="leaf" data-leaf="2">
+          <section class="face front" data-page="4"><div class="paper">
+            <div class="paper-heading"><span>PROJECT / 01</span><span>好奇心的航線</span></div>
+            <p class="chapter-kicker">AN ISLAND OF QUESTIONS</p><h2 class="page-title">萬問島<span style="display:block;font:italic .62em Georgia,serif;color:#8a9a70">Stay curious.</span></h2>
+            <p class="page-copy">把「為什麼」，變成一場冒險。<br>挑選科目、挑戰問答，<br>在每一題的解說裡發現新知。</p>
+            <ul class="project-features"><li>單人闖關，走出自己的航線</li><li>與朋友連線，來場知識 PK</li><li>答題之外，讀懂背後的原因</li></ul>
+            <div class="page-tags"><span>科普問答</span><span>連線對戰</span><span>PWA</span></div>
+            <a class="project-link" href="https://wanwen-island-roger.roger042897.chatgpt.site/" target="_blank" rel="noopener noreferrer" aria-label="前往萬問島（另開分頁）">前往萬問島 <span aria-hidden="true">↗</span></a>
+            <div class="page-number"><span>EXPLORE / PLAY / LEARN</span><span class="folio">4</span></div>
+          </div><div class="flip-shadow" aria-hidden="true"></div></section>
+          <section class="face back nosfy-paper" data-page="5"><div class="paper">
+            <div class="paper-heading"><span>A SPACE FOR CONVERSATION</span><span>諾斯菲</span></div>
+            <div class="nosfy-art" aria-hidden="true"><div class="orbit"></div><div class="voice-disc"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="speech speech-one">把想法，說出來。</span><span class="speech speech-two">讓對話，接下去。</span></div>
+            <p class="art-caption">一來一往，<br>讓想法有了回聲。<small>THOUGHTS FIND THEIR VOICE.</small></p>
+            <div class="page-number"><span>NOSFY / VOICE & TEXT</span><span class="folio">5</span></div>
+          </div><div class="flip-shadow" aria-hidden="true"></div></section>
+        </div>
+        <div class="leaf" data-leaf="1">
+          <section class="face front" data-page="2"><div class="paper intro-paper">
+            <div class="paper-heading"><span>HELLO, WORLD.</span><span>從這裡開始</span></div>
+            <div class="mobile-intro"><img src="src/image/roger-portrait.webp" alt="Roger" width="34" height="34"><span>你好，我是 Roger。</span></div>
+            <p class="chapter-kicker">A FEW WORDS BEFORE WE BEGIN</p><h2 class="page-title">把好奇心，<br>寫成日常。</h2>
+            <p class="page-copy">我是 Roger，喜歡程式設計、AI 與數據分析。這本小書收錄我的專案與生活：從一個問題出發，把想法慢慢做出來。</p>
+            <ol class="toc" aria-label="書本目錄"><li><button type="button" data-chapter="2">萬問島 · 知識的冒險 <small>03 — 04</small></button></li><li><button type="button" data-chapter="3">諾斯菲 · 對話的溫度 <small>05 — 06</small></button></li><li><button type="button" data-chapter="4">日常收集 · 與我聯絡 <small>07 — 08</small></button></li></ol>
+            <div class="page-tags"><span>Python</span><span>AI</span><span>把想法做出來</span></div>
+            <div class="page-number"><span>CONTENTS</span><span class="folio">2</span></div>
+          </div><div class="flip-shadow" aria-hidden="true"></div></section>
+          <section class="face back art-page" data-page="3"><div class="paper">
+            <div class="paper-heading"><span>AN ISLAND OF QUESTIONS</span><span>萬問島</span></div>
+            <div class="island-art" aria-hidden="true"><div class="ocean"></div><div class="island"><div class="hill"></div><div class="hill two"></div><div class="flag-pole"></div></div><span class="art-word word-a">wonder</span><span class="art-word word-b">discover</span><span class="art-spark">✧</span></div>
+            <p class="art-caption">每一個為什麼，<br>都是一座新島嶼。<small>FOLLOW YOUR CURIOSITY.</small></p>
+            <div class="page-number"><span>WANWEN ISLAND</span><span class="folio">3</span></div>
+          </div><div class="flip-shadow" aria-hidden="true"></div></section>
+        </div>
+        <div class="leaf" data-leaf="0">
+          <section class="face front cover" data-page="0" aria-label="書本封面"><div class="cover-border"></div><div class="ribbon" aria-hidden="true"></div><div class="cover-inner"><p class="edition">HYDESTORY / PERSONAL EDITION</p><h1 class="cover-title">寫程式。<br>也寫生活。</h1><p class="cover-subtitle">一本關於好奇心、實作，<br>和那些值得留下的小事的書。</p><div class="cover-symbol" aria-hidden="true"><span>h.</span></div><div class="cover-bottom"><strong>Roger</strong><span>VOL. 01 / 2026</span></div></div><div class="flip-shadow" aria-hidden="true"></div></section>
+          <section class="face back portrait-paper" data-page="1"><div class="paper"><div class="paper-heading"><span>THE PERSON BEHIND THE PAGES</span><span>你好，Roger</span></div><div class="portrait-block"><img src="src/image/roger-portrait.webp" width="600" height="720" alt="Roger 的個人照片"></div><p class="hand-note">持續學習，持續實作。</p><p class="little-note">Always a work in progress.</p><div class="page-number"><span>A LITTLE ABOUT ME</span><span class="folio">1</span></div></div><div class="flip-shadow" aria-hidden="true"></div></section>
+        </div>
+      </div></div>
+    </div>
+  </main>
+  <div class="side-note" aria-hidden="true">SCROLL TO TURN THE PAGE</div>
+  <div class="book-controls" aria-label="翻頁控制">
+    <p class="scroll-cue" id="scroll-cue"><span aria-hidden="true">↓</span> 往下滑，翻開這本書</p>
+    <div class="control-bar"><button class="page-arrow" id="previous-page" type="button" aria-label="上一章">←</button><nav class="chapter-tabs" aria-label="書本章節"><button type="button" data-chapter="0" aria-current="true">封面</button><button type="button" data-chapter="1">序章</button><button type="button" data-chapter="2">萬問島</button><button type="button" data-chapter="3">諾斯菲</button><button type="button" data-chapter="4">後記</button></nav><button class="page-arrow" id="next-page" type="button" aria-label="下一章">→</button></div>
+    <div class="book-progress" aria-hidden="true"><span id="progress-bar"></span></div>
+  </div>
+  <noscript><p class="noscript">翻頁動畫需要 JavaScript。你可以<a href="index.html">開啟一般網頁</a>閱讀內容。</p></noscript>
+  <script>
+    const book = document.getElementById('book');
+    const story = document.getElementById('scroll-story');
+    const leaves = [...document.querySelectorAll('.leaf')].sort((a,b) => Number(a.dataset.leaf) - Number(b.dataset.leaf));
+    // Keep DOM order meaningful for linear reading and screen readers; z-index controls the stack.
+    leaves.forEach(leaf => book.append(leaf));
+    book.append(document.querySelector('.last-page'));
+    const faces = [...document.querySelectorAll('[data-page]')];
+    const tabs = [...document.querySelectorAll('.chapter-tabs button')];
+    const previous = document.getElementById('previous-page');
+    const next = document.getElementById('next-page');
+    const modeButton = document.getElementById('mode-button');
+    const mobile = matchMedia('(max-width:700px)');
+    const reduced = matchMedia('(prefers-reduced-motion:reduce)');
+    const cue = document.getElementById('scroll-cue');
+    const bar = document.getElementById('progress-bar');
+    const clamp = (value, min=0, max=1) => Math.min(max, Math.max(min, value));
+    const smooth = value => value*value*(3-2*value);
+    let currentChapter = 0;
+    let progress = 0;
+    let reading = false;
+    let frame;
+    let maxScroll = 1;
+    let startScroll = 0;
+
+    function measure() {
+      startScroll = story.getBoundingClientRect().top + scrollY;
+      maxScroll = Math.max(1, story.offsetHeight - innerHeight);
+      schedule();
+    }
+    function render() {
+      frame = null;
+      if (reading) return;
+      progress = clamp((scrollY-startScroll)/maxScroll)*leaves.length;
+      const active = Math.min(leaves.length, Math.floor(progress + .5));
+      const opening = smooth(clamp(progress/.8));
+      book.style.transform = 'translateX(calc(var(--page-w) * ' + (-.5*(mobile.matches ? 1 : 1-opening)) + '))';
+      document.querySelector('.board-left').style.opacity = String(opening);
+      document.querySelector('.book-shadow').style.left = (50-45*opening) + '%';
+      let visiblePages = new Set();
+      leaves.forEach((leaf,index) => {
+        const turn = smooth(clamp((progress-index-.13)/.74));
+        const angle = -180*turn;
+        leaf.style.transform = 'rotateY(' + angle + 'deg)';
+        leaf.style.zIndex = String(turn > 0 && turn < 1 ? 100 : turn === 1 ? 10+index : 50-index);
+        leaf.querySelectorAll('.flip-shadow').forEach(shadow => { shadow.style.opacity = String(Math.sin(turn*Math.PI)*.35); });
+        if (progress >= index && progress < index+1) {
+          // Only expose the visible spread to keyboard and assistive technology.
+          if (turn < .5) { visiblePages.add(index*2); if (index > 0 && !mobile.matches) visiblePages.add(index*2-1); }
+          else { visiblePages.add(index*2+2); if (!mobile.matches) visiblePages.add(index*2+1); }
+        }
+      });
+      if (progress >= leaves.length) visiblePages = new Set(mobile.matches ? [8] : [7,8]);
+      for (const face of faces) {
+        const visible = visiblePages.has(Number(face.dataset.page));
+        face.inert = !visible;
+        face.setAttribute('aria-hidden', String(!visible));
+      }
+      currentChapter = active;
+      tabs.forEach((tab,index) => { if (index === active) tab.setAttribute('aria-current','true'); else tab.removeAttribute('aria-current'); });
+      previous.disabled = active === 0;
+      next.disabled = active === leaves.length;
+      bar.style.width = (progress/leaves.length*100) + '%';
+      cue.innerHTML = active === 0 ? '<span aria-hidden="true">↓</span> 往下滑，翻開這本書' : active === leaves.length ? '<span aria-hidden="true">↑</span> 故事未完。往上滑，再讀一次。' : '<span aria-hidden="true">↕</span> 往下翻下一頁，往上回到上一頁';
+    }
+    function schedule() { if (!frame) frame = requestAnimationFrame(render); }
+    function goToChapter(chapter) {
+      chapter = clamp(chapter,0,leaves.length);
+      if (reading) {
+        document.querySelector('[data-page="' + (chapter*2) + '"]').scrollIntoView({behavior:'auto',block:'center'});
+      } else {
+        scrollTo({top:startScroll + maxScroll*chapter/leaves.length,behavior:reduced.matches?'auto':'smooth'});
+      }
+    }
+    function setReading(value) {
+      const chapter = currentChapter;
+      reading = value;
+      document.body.classList.toggle('reading',reading);
+      modeButton.textContent = reading ? '返回立體書' : '閱讀模式';
+      modeButton.setAttribute('aria-pressed',String(reading));
+      if (reading) {
+        // DOM follows physical stacking order; sort into reading order for linear mode.
+        faces.sort((a,b) => Number(a.dataset.page)-Number(b.dataset.page)).forEach(face => {
+          face.inert = false;
+          face.removeAttribute('aria-hidden');
+          face.style.order = face.dataset.page;
+        });
+        book.querySelectorAll('.leaf').forEach(leaf => { leaf.style.order = leaf.dataset.leaf; });
+        scrollTo({top:0,behavior:'auto'});
+      } else {
+        measure();
+        scrollTo({top:startScroll + maxScroll*chapter/leaves.length,behavior:'auto'});
+        render();
+      }
+    }
+    document.querySelectorAll('[data-chapter]').forEach(button => button.addEventListener('click',() => goToChapter(Number(button.dataset.chapter))));
+    previous.addEventListener('click',() => goToChapter(currentChapter-1));
+    next.addEventListener('click',() => goToChapter(currentChapter+1));
+    modeButton.addEventListener('click',() => setReading(!reading));
+    addEventListener('scroll',schedule,{passive:true});
+    addEventListener('resize',measure);
+    document.addEventListener('keydown',event => {
+      if (reading || event.altKey || event.ctrlKey || event.metaKey || event.target.closest('input,textarea,select,[contenteditable="true"]')) return;
+      const actions = {ArrowRight:currentChapter+1,ArrowLeft:currentChapter-1,Home:0,End:leaves.length};
+      if (Object.hasOwn(actions,event.key)) { event.preventDefault(); goToChapter(actions[event.key]); }
+    });
+    mobile.addEventListener('change',measure);
+    reduced.addEventListener('change',event => { if (event.matches) setReading(true); });
+    measure();
+    render();
+    if (reduced.matches) setReading(true);
+  </script>
+</body>
+</html>

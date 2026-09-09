@@ -1,86 +1,72 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>多項式與係數矩陣</title>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; }
-        h2, h3 { font-weight: bold; color: #333333;}
-        h2 { font-size: 1.7em; margin-bottom: 5px; }
-        h3 { font-size: 1.3em; color: #555555; }
-        p, ul, li { font-size: 1.1em; margin-left: 10px; color: #666666; }
-    </style>
-</head>
-<body>
-
-<h2>多項式與係數矩陣</h2>
-
-<h3>多項式的增量表示法</h3>
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>多項式與係數矩陣 — Hydestory</title><link rel="icon" href="../../../../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../../../static/css/site.css"><script src="../../../../static/js/site.js" defer></script></head>
+<body class="reading-page"><a class="skip-link" href="#main">跳到主要內容</a><header class="site-header"><div class="shell header-inner">
+<a aria-label="Hydestory 首頁" class="brand" href="../../../../index.html"><span aria-hidden="true" class="brand-mark">h.</span>hydestory<span class="brand-dot">/</span></a>
+<button aria-controls="site-nav" aria-expanded="false" class="menu-toggle" type="button">選單 <span aria-hidden="true">☰</span></button>
+<nav aria-label="主要導覽" class="site-nav" id="site-nav">
+<a aria-label="萬問島（另開分頁）" href="https://wanwen-island-roger.roger042897.chatgpt.site/" rel="noopener noreferrer" target="_blank">萬問島 <span aria-hidden="true">↗</span></a>
+<a aria-label="諾斯菲（另開分頁）" href="https://nosfy-pwa.onrender.com/" rel="noopener noreferrer" target="_blank">諾斯菲 <span aria-hidden="true">↗</span></a>
+<a href="../../../50lan.html">50嵐工具</a>
+<a href="../../../../index.html#about">關於我</a>
+<a class="nav-contact" href="../../../../index.html#contact">聊聊想法 <span aria-hidden="true">↗</span></a>
+</nav>
+</div></header><main id="main" class="reading-shell"><nav class="breadcrumbs" aria-label="所在位置"><a href="../../../../index.html">首頁</a><span aria-hidden="true">/</span><a href="../dataStructure.html">課程</a></nav><header class="reading-title"><p class="eyebrow">學習筆記</p><h1>多項式與係數矩陣</h1></header><div class="reading-layout"><aside class="reading-toc"><details open><summary>文章目錄</summary><ol><li class="toc-h2"><a href="#section-1">多項式與係數矩陣</a></li><li class="toc-h3"><a href="#section-2">多項式的增量表示法</a></li><li class="toc-h3"><a href="#section-3">矩陣的定義</a></li><li class="toc-h3"><a href="#section-4">係數矩陣</a></li><li class="toc-h3"><a href="#section-5">Turn Document Matrix (TDM)</a></li><li class="toc-h3"><a href="#section-6">相鄰矩陣</a></li><li class="toc-h3"><a href="#section-7">矩陣的轉置（Transpose）</a></li><li class="toc-h3"><a href="#section-8">係數矩陣的表示法</a></li><li class="toc-h3"><a href="#section-9">矩陣的加法與乘法</a></li><li class="toc-h3"><a href="#section-10">矩陣乘法的優化</a></li><li class="toc-h3"><a href="#section-11">多維矩陣的表示</a></li><li class="toc-h3"><a href="#section-12">總結</a></li></ol></details></aside><article class="reading-content">
+<h2 id="section-1">多項式與係數矩陣</h2>
+<h3 id="section-2">多項式的增量表示法</h3>
 <ul>
-    <li>使用陣列來表示多項式。</li>
-    <li>每個多項式的項次和係數都可以存放在陣列中。</li>
+<li>使用陣列來表示多項式。</li>
+<li>每個多項式的項次和係數都可以存放在陣列中。</li>
 </ul>
-
-<h3>矩陣的定義</h3>
+<h3 id="section-3">矩陣的定義</h3>
 <ul>
-    <li>矩陣是一個M乘N的陣列，其中M是行數，N是列數。</li>
-    <li>例如，5乘3的矩陣有15個元素，6乘6的矩陣有36個元素。</li>
+<li>矩陣是一個M乘N的陣列，其中M是行數，N是列數。</li>
+<li>例如，5乘3的矩陣有15個元素，6乘6的矩陣有36個元素。</li>
 </ul>
-
-<h3>係數矩陣</h3>
+<h3 id="section-4">係數矩陣</h3>
 <ul>
-    <li>係數矩陣是指大部分元素為0的矩陣。</li>
-    <li>例如，6乘6的矩陣中只有8個非零元素。</li>
+<li>係數矩陣是指大部分元素為0的矩陣。</li>
+<li>例如，6乘6的矩陣中只有8個非零元素。</li>
 </ul>
-
-<h3>Turn Document Matrix (TDM)</h3>
+<h3 id="section-5">Turn Document Matrix (TDM)</h3>
 <ul>
-    <li>TDM在文字探勘（Text Mining）中常用。</li>
-    <li>每個字詞（Term）和每篇文章（Document）形成一個矩陣。</li>
-    <li>矩陣中的元素表示該字詞在該文章中出現的次數。</li>
+<li>TDM在文字探勘（Text Mining）中常用。</li>
+<li>每個字詞（Term）和每篇文章（Document）形成一個矩陣。</li>
+<li>矩陣中的元素表示該字詞在該文章中出現的次數。</li>
 </ul>
-
-<h3>相鄰矩陣</h3>
+<h3 id="section-6">相鄰矩陣</h3>
 <ul>
-    <li>相鄰矩陣用於表示圖（Graph）。</li>
-    <li>矩陣中的元素表示兩個節點之間是否有邊（1表示有邊，0表示無邊）。</li>
+<li>相鄰矩陣用於表示圖（Graph）。</li>
+<li>矩陣中的元素表示兩個節點之間是否有邊（1表示有邊，0表示無邊）。</li>
 </ul>
-
-<h3>矩陣的轉置（Transpose）</h3>
+<h3 id="section-7">矩陣的轉置（Transpose）</h3>
 <ul>
-    <li>矩陣轉置是將行和列互換。</li>
-    <li>例如，將A的(i, j)元素轉置為A的(j, i)元素。</li>
+<li>矩陣轉置是將行和列互換。</li>
+<li>例如，將A的(i, j)元素轉置為A的(j, i)元素。</li>
 </ul>
-
-<h3>係數矩陣的表示法</h3>
+<h3 id="section-8">係數矩陣的表示法</h3>
 <ul>
-    <li>傳統的M乘N矩陣表示法對於係數矩陣來說非常浪費空間。</li>
-    <li>只記錄非零元素的位置和值。</li>
+<li>傳統的M乘N矩陣表示法對於係數矩陣來說非常浪費空間。</li>
+<li>只記錄非零元素的位置和值。</li>
 </ul>
-
-<h3>矩陣的加法與乘法</h3>
+<h3 id="section-9">矩陣的加法與乘法</h3>
 <ul>
-    <li>矩陣加法：將兩個矩陣的對應元素相加。</li>
-    <li>矩陣乘法：根據線性代數的定義進行計算。</li>
+<li>矩陣加法：將兩個矩陣的對應元素相加。</li>
+<li>矩陣乘法：根據線性代數的定義進行計算。</li>
 </ul>
-
-<h3>矩陣乘法的優化</h3>
+<h3 id="section-10">矩陣乘法的優化</h3>
 <ul>
-    <li>將B矩陣轉置後再進行乘法運算，可以減少不必要的計算。</li>
-    <li>使用分群的方法來進行矩陣乘法，提升效率。</li>
+<li>將B矩陣轉置後再進行乘法運算，可以減少不必要的計算。</li>
+<li>使用分群的方法來進行矩陣乘法，提升效率。</li>
 </ul>
-
-<h3>多維矩陣的表示</h3>
+<h3 id="section-11">多維矩陣的表示</h3>
 <ul>
-    <li>多維矩陣的空間需求是所有維度大小的乘積。</li>
-    <li>Raw Major和Column Major是兩種不同的存儲方式。</li>
+<li>多維矩陣的空間需求是所有維度大小的乘積。</li>
+<li>Raw Major和Column Major是兩種不同的存儲方式。</li>
 </ul>
-
-<h3>總結</h3>
+<h3 id="section-12">總結</h3>
 <ul>
-    <li>係數矩陣和多項式的表示法可以有效地節省空間。</li>
-    <li>矩陣的轉置和乘法是矩陣運算中的重要操作。</li>
-    <li>使用適當的表示法和優化方法可以提升矩陣運算的效率。</li>
+<li>係數矩陣和多項式的表示法可以有效地節省空間。</li>
+<li>矩陣的轉置和乘法是矩陣運算中的重要操作。</li>
+<li>使用適當的表示法和優化方法可以提升矩陣運算的效率。</li>
 </ul>
-
-</body>
-</html>
+</article></div><a class="reading-back" href="../dataStructure.html">← 返回課程</a></main><footer class="site-footer"><div class="shell footer-inner"><a class="brand" href="../../../../index.html">hydestory<span class="brand-dot">/</span></a><p>© <span data-current-year="">2026</span> Roger · 用好奇心，慢慢累積。</p><a class="text-link small" href="../../../../index.html#main">回到頂端 ↑</a></div></footer></body></html>

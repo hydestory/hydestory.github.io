@@ -1,109 +1,86 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>統計方法</title>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; }
-        h2 { font-size: 1.7em; margin-bottom:5px ; font-weight:bold; color: #333333;  }
-        h3 { font-size: 1.3em; font-weight:bold; color: #555555; }
-        p, ul, li { font-size: 1.1em; margin-left: 10px ; color: #666666; }
-        .example, .experiment, .probability { margin-top: 20px; }
-        /* content { margin-left: 20px; color: #eb0000;} */
-        code { background-color: #f4f4f4; padding: 2px 5px; font-size: 1.1em; }
-        pre { background-color: #f4f4f4; padding: 10px; font-size: 1.1em; }
-    </style>
-</head>
-<body>
-
-<h2>3.8節</h2>
-
-<h3>1. 介紹統計方法：</h3>
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>統計方法 — Hydestory</title><link rel="icon" href="../../../../static/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../../../../static/css/site.css"><script src="../../../../static/js/site.js" defer></script></head>
+<body class="reading-page"><a class="skip-link" href="#main">跳到主要內容</a><header class="site-header"><div class="shell header-inner">
+<a aria-label="Hydestory 首頁" class="brand" href="../../../../index.html"><span aria-hidden="true" class="brand-mark">h.</span>hydestory<span class="brand-dot">/</span></a>
+<button aria-controls="site-nav" aria-expanded="false" class="menu-toggle" type="button">選單 <span aria-hidden="true">☰</span></button>
+<nav aria-label="主要導覽" class="site-nav" id="site-nav">
+<a aria-label="萬問島（另開分頁）" href="https://wanwen-island-roger.roger042897.chatgpt.site/" rel="noopener noreferrer" target="_blank">萬問島 <span aria-hidden="true">↗</span></a>
+<a aria-label="諾斯菲（另開分頁）" href="https://nosfy-pwa.onrender.com/" rel="noopener noreferrer" target="_blank">諾斯菲 <span aria-hidden="true">↗</span></a>
+<a href="../../../50lan.html">50嵐工具</a>
+<a href="../../../../index.html#about">關於我</a>
+<a class="nav-contact" href="../../../../index.html#contact">聊聊想法 <span aria-hidden="true">↗</span></a>
+</nav>
+</div></header><main id="main" class="reading-shell"><nav class="breadcrumbs" aria-label="所在位置"><a href="../../../../index.html">首頁</a><span aria-hidden="true">/</span><a href="../probability.html">課程</a></nav><header class="reading-title"><p class="eyebrow">學習筆記</p><h1>統計方法</h1></header><div class="reading-layout"><aside class="reading-toc"><details open><summary>文章目錄</summary><ol><li class="toc-h2"><a href="#section-1">3.8節</a></li><li class="toc-h3"><a href="#section-2">1. 介紹統計方法：</a></li><li class="toc-h3"><a href="#section-3">2. 統計記憶函數：</a></li><li class="toc-h2"><a href="#section-4">3.9 節</a></li><li class="toc-h3"><a href="#section-5">3. 例子說明 - 車型示例：</a></li><li class="toc-h3"><a href="#section-6">4. 設計實驗方法：</a></li><li class="toc-h3"><a href="#section-7">5. 計算機率分佈：</a></li><li class="toc-h2"><a href="#section-8">3.9節下的題目解答</a></li><li class="toc-h3"><a href="#section-9">1. 製作表格示例：</a></li><li class="toc-h3"><a href="#section-10">2. 關於累積函數：</a></li><li class="toc-h2"><a href="#section-11">Continuous Case</a></li><li class="toc-h3"><a href="#section-12">1. Continuous Case介紹：</a></li><li class="toc-h3"><a href="#section-13">2. 計算示例 - 微積分應用：</a></li><li class="toc-h2"><a href="#section-14">例題解析</a></li><li class="toc-h3"><a href="#section-15">例題1</a></li><li class="toc-h3"><a href="#section-16">例題2</a></li></ol></details></aside><article class="reading-content">
+<h2 id="section-1">3.8節</h2>
+<h3 id="section-2">1. 介紹統計方法：</h3>
 <ul>
-    <li>用例子列表的方式列出，每個例子分別計算。</li>
-    <li>建議用清晰的方法列舉，以便理解各種統計的概念。</li>
+<li>用例子列表的方式列出，每個例子分別計算。</li>
+<li>建議用清晰的方法列舉，以便理解各種統計的概念。</li>
 </ul>
-
-
-
-<h3>2. 統計記憶函數：</h3>
+<h3 id="section-3">2. 統計記憶函數：</h3>
 <ul>
-    <li>列出各種可能性，計算總概率。</li>
-    <li>統計範疇內列表，例如將S設為0、一個S設為多少，總和應等於1。</li>
+<li>列出各種可能性，計算總概率。</li>
+<li>統計範疇內列表，例如將S設為0、一個S設為多少，總和應等於1。</li>
 </ul>
-<br>
-
-<h2>3.9 節</h2>
-
-<h3>3. 例子說明 - 車型示例：</h3>
+<br/>
+<h2 id="section-4">3.9 節</h2>
+<h3 id="section-5">3. 例子說明 - 車型示例：</h3>
 <p>假設庫存裡有150%的車輛，都配備了側面網狀安全氣囊。找出這些車型的概率分佈。</p>
-<br>
-
-<h3>4. 設計實驗方法：</h3>
+<br/>
+<h3 id="section-6">4. 設計實驗方法：</h3>
 <p>丟硬幣模擬：</p>
 <ul>
-    <li>丟4次硬幣每次的結果，作為車輛配備與否的可能性。</li>
-    <li>計算各種情況下安全氣囊的數量。</li>
+<li>丟4次硬幣每次的結果，作為車輛配備與否的可能性。</li>
+<li>計算各種情況下安全氣囊的數量。</li>
 </ul>
-<br>
-
-<h3>5. 計算機率分佈：</h3>
+<br/>
+<h3 id="section-7">5. 計算機率分佈：</h3>
 <p>用C(n, k)來表示n輛車中選取k輛有安全氣囊的組合。</p>
 <p>提到若硬幣具有偏置（例如正面出現的概率較低），使用二項分佈計算。</p>
-<br>
-
-<h2>3.9節下的題目解答</h2>
-
-<h3>1. 製作表格示例：</h3>
+<br/>
+<h2 id="section-8">3.9節下的題目解答</h2>
+<h3 id="section-9">1. 製作表格示例：</h3>
 <ul>
-    <li>將所有可能結果列出。</li>
-    <li>計算總概率並與給定問題對比。</li>
+<li>將所有可能結果列出。</li>
+<li>計算總概率並與給定問題對比。</li>
 </ul>
-<br>
-
-<h3>2. 關於累積函數：</h3>
+<br/>
+<h3 id="section-10">2. 關於累積函數：</h3>
 <ul>
-    <li>解釋累積函數的圖形表示方法，特徵為曲線爬升。</li>
-    <li>用積分表示累積機率。</li>
+<li>解釋累積函數的圖形表示方法，特徵為曲線爬升。</li>
+<li>用積分表示累積機率。</li>
 </ul>
-<br>
-
-<h2>Continuous Case</h2>
-
-<h3>1. Continuous Case介紹：</h3>
+<br/>
+<h2 id="section-11">Continuous Case</h2>
+<h3 id="section-12">1. Continuous Case介紹：</h3>
 <ul>
-    <li>累積機率需用微積分計算。</li>
-    <li>單點機率為0。</li>
+<li>累積機率需用微積分計算。</li>
+<li>單點機率為0。</li>
 </ul>
-<br>
-
-<h3>2. 計算示例 - 微積分應用：</h3>
+<br/>
+<h3 id="section-13">2. 計算示例 - 微積分應用：</h3>
 <ul>
-    <li>用面積表示機率，使用積分計算。</li>
+<li>用面積表示機率，使用積分計算。</li>
 </ul>
-<br>
-
-<h2>例題解析</h2>
-
+<br/>
+<h2 id="section-14">例題解析</h2>
 <div class="example">
-    <h3>例題1</h3>
-    <p><strong>題目：</strong>假設某溫度範圍內的機率密度函數。</p>
-    <pre><code>f(x) = (1/9) * (x^2 + 2x + 1) for -1 <= x <= 2</code></pre>
-    <strong>計算：</strong>
-    <p>核實總面積為1（使用積分）。計算特定範圍內的機率，如 P(0 &#8804; x &#8804; 1)。</p>
+<h3 id="section-15">例題1</h3>
+<p><strong>題目：</strong>假設某溫度範圍內的機率密度函數。</p>
+<pre><code>f(x) = (1/9) * (x^2 + 2x + 1) for -1 &lt;= x &lt;= 2</code></pre>
+<strong>計算：</strong>
+<p>核實總面積為1（使用積分）。計算特定範圍內的機率，如 P(0 ≤ x ≤ 1)。</p>
 </div>
-<br>
-
+<br/>
 <div class="example">
-    <h3>例題2</h3>
-    <p><strong>題目：</strong>計算累積函數 <code>F_X(x)</code>。</p>
-    <pre><code>F_X(x) = ∫ from -1 to x of f(t) dt</code></pre>
-    <strong>步驟：</strong>
-    <p>使用積分計算累積函數，結果為：</p>
-    <pre><code>F_X(x) = (1/9) * (x^3 / 3 + x^2 + x)</code></pre>
-    <strong>應用：</strong>
-    <p>利用累積函數計算範圍機率，如 <code>P(0 &#8804; x &#8804; 1) = F_X(1) - F_X(0)</code>。</p>
+<h3 id="section-16">例題2</h3>
+<p><strong>題目：</strong>計算累積函數 <code>F_X(x)</code>。</p>
+<pre><code>F_X(x) = ∫ from -1 to x of f(t) dt</code></pre>
+<strong>步驟：</strong>
+<p>使用積分計算累積函數，結果為：</p>
+<pre><code>F_X(x) = (1/9) * (x^3 / 3 + x^2 + x)</code></pre>
+<strong>應用：</strong>
+<p>利用累積函數計算範圍機率，如 <code>P(0 ≤ x ≤ 1) = F_X(1) - F_X(0)</code>。</p>
 </div>
-<br>
-
-</body>
-</html>
+<br/>
+</article></div><a class="reading-back" href="../probability.html">← 返回課程</a></main><footer class="site-footer"><div class="shell footer-inner"><a class="brand" href="../../../../index.html">hydestory<span class="brand-dot">/</span></a><p>© <span data-current-year="">2026</span> Roger · 用好奇心，慢慢累積。</p><a class="text-link small" href="../../../../index.html#main">回到頂端 ↑</a></div></footer></body></html>

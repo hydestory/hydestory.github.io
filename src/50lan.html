@@ -205,6 +205,15 @@
       /* 確保未選中按鈕在淺色下有清楚對比 */
       body.theme-light .btn { color: #374151; background: #ffffff; border-color: var(--border); }
       body.theme-light .btn:hover { background: #f9fafb; border-color: #d1d5db; }
+      @media (max-width: 800px) {
+        header .nav { flex-direction: column; align-items: stretch; gap: 12px; }
+        header .brand { white-space: nowrap; }
+        header .logo { flex-shrink: 0; }
+        header .nav-actions { flex-wrap: wrap; gap: 8px; }
+        header .nav-actions .btn { white-space: nowrap; padding: 8px 10px; font-size: 12px; min-height: 40px; }
+      }
+      :is(a, button, input, select):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
     </style>
   </head>
   <body>
@@ -214,7 +223,8 @@
           <div class="logo"><span>🥤</span></div>
           <span>50嵐飲品數據查詢</span>
         </div>
-        <nav class="nav-actions">
+        <nav class="nav-actions" aria-label="飲品工具導覽">
+          <a class="btn" href="../index.html">← 回到 Hydestory</a>
           <a class="btn" href="#concepts">觀念介紹</a>
           <a class="btn primary" href="#quick-calc">快速試算</a>
           <button class="btn" id="theme-toggle" aria-label="切換深淺模式" title="切換深淺模式"></button>
@@ -228,7 +238,7 @@
           <div>
             <div class="eyebrow">快速查詢，多種練習</div>
             <h1>快速試算與練習50嵐飲品數據</h1>
-            <p class="lead">在50嵐打工時有感而發有感而發</p>
+            <p class="lead">從打工日常出發，把飲品配方變成隨手可查的小工具。</p>
             <div class="hero-cta">
               <a id="start" class="btn primary" href="#quick-calc">立即試算</a>
               <a class="btn" href="#concepts">觀念介紹</a>
